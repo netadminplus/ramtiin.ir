@@ -1,24 +1,185 @@
-/* static-only additions for ramtiin.ir (theme CSS does the rest) */
+/* ============================================================
+   DESIGN SYSTEM — ramtiin.ir
+   One set of tokens, one component per pattern. Rules are written
+   to beat the Veen theme where it fights the system (see notes).
+   Contrast targets: text 4.5:1 (AA), UI fills with white text 4.5:1.
+   ============================================================ */
+:root{
+  --brand:#FF486A;          /* theme brand pink — accents & large fills only */
+  --brand-strong:#D61F4A;   /* small fills & text — white on it is 5.2:1 */
+  --brand-text:#BE123C;     /* text on tint — ~6:1 */
+  --brand-tint:#FFF1F2;
+  --brand-tint-2:#FFE4E6;
+  --brand-border:#FECDD3;
+  --accent2:#7169FE;        /* theme secondary purple — large fills only */
+  --accent2-strong:#4F46E5; /* small fills & text — white on it is 5.6:1 */
+  --ink:#1F2937;            /* headings */
+  --body:#374151;           /* body text — 9:1 on white */
+  --muted:#6B7280;          /* secondary text — 4.8:1 on white */
+  --faint:#9CA3AF;          /* captions only, never body text */
+  --line:#E5E7EB;
+  --line-strong:#D1D5DB;
+  --surface:#FFFFFF;
+  --surface-2:#F9FAFB;
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-pill:999px;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.10);
+  --shadow-md:0 4px 8px -2px rgba(16,24,40,.10),0 2px 4px -2px rgba(16,24,40,.06);
+}
 /* Vazirmatn — free, standard Persian web font, self-hosted (variable weight) */
 @font-face{font-family:'Vazirmatn';src:url('../fonts/Vazirmatn-Variable.woff2') format('woff2-variations');font-weight:100 900;font-style:normal;font-display:swap}
 body,button,input,select,textarea,.title,h1,h2,h3,h4,h5,h6,#header nav ul.menu>li>a,#header nav ul.sub-menu li a,div.meta,div.tags,aside .widget,#footer .widget,.epcl-button,.button{font-family:'Vazirmatn',Tahoma,sans-serif!important}
 /* Horizontal scroll: never. clip (not hidden) keeps position:sticky working. */
 html,body{overflow-x:clip}
-/* Typography scale (Persian standard: generous line-height, clamp() for fluid type) */
-body{font-size:16px;line-height:1.9;color:#242323}
+/* Accessible keyboard focus, everywhere. */
+:focus-visible{outline:2px solid var(--brand-strong);outline-offset:2px;border-radius:4px}
+/* ---------- Type scale ---------- */
+body{font-size:16px;line-height:1.9;color:var(--body)}
 .post-content p,.post-excerpt p{line-height:1.9}
 /* Headings are BOLD, not just bigger — the weight carries the hierarchy. */
-h1.main-title,.post-title{font-size:clamp(23px,5vw,31px);line-height:1.6;font-weight:800;color:#242323}
-.post-content h2{font-size:clamp(20px,4vw,25px);line-height:1.7;font-weight:700;color:#242323}
-.post-content h3{font-size:clamp(18px,3.5vw,21px);line-height:1.7;font-weight:700;color:#242323}
-.post-content h4{font-size:clamp(16px,3vw,19px);line-height:1.7;font-weight:700;color:#242323}
+h1.main-title,.post-title{font-size:clamp(23px,5vw,31px);line-height:1.6;font-weight:800;color:var(--ink)}
+.post-content h2{font-size:clamp(20px,4vw,25px);line-height:1.7;font-weight:700;color:var(--ink)}
+.post-content h3{font-size:clamp(18px,3.5vw,21px);line-height:1.7;font-weight:700;color:var(--ink)}
+.post-content h4{font-size:clamp(16px,3vw,19px);line-height:1.7;font-weight:700;color:var(--ink)}
 #header .logo a,.published .logo a{font-weight:800}
 .widget-title{font-weight:700!important}
-.epcl-button,.button,.wpcf7-submit{font-weight:700}
-.post-excerpt{font-size:15px;line-height:1.9;color:#374151}
-.post-excerpt p{color:#374151}
-.meta,.min-read,.views-counter{font-size:13px}
-/* Responsive / overflow guards — no horizontal scroll on mobile */
+.post-excerpt{font-size:15px;line-height:1.9;color:var(--body)}
+.post-excerpt p{color:var(--body)}
+.meta,.min-read,.views-counter{font-size:13px;color:var(--muted)}
+/* ---------- Buttons: one primary, one secondary, one ghost ---------- */
+.epcl-button:not(.circle),.button:not(.circle),.wpcf7-submit{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:var(--r-md);font-weight:700;font-size:15px;line-height:1.4;background:var(--brand-strong);color:#fff;border:1px solid var(--brand-strong);box-shadow:none;cursor:pointer}
+.epcl-button:not(.circle):hover,.button:not(.circle):hover,.wpcf7-submit:hover{background:#B91C42;border-color:#B91C42;color:#fff;box-shadow:var(--shadow-sm)}
+.epcl-button.secondary,.button.secondary{background:var(--accent2-strong);border-color:var(--accent2-strong)}
+.epcl-button.secondary:hover,.button.secondary:hover{background:#4338CA;border-color:#4338CA}
+#show-comments{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:var(--r-md);font-weight:700;font-size:15px;background:var(--brand-strong);color:#fff;border:1px solid var(--brand-strong);cursor:pointer}
+/* ---------- Chip: ONE component for every category, everywhere ----------
+   No per-category background colours: 7 arbitrary colours failed contrast
+   with any text colour (white on yellow, dark on pink). One tinted pill,
+   dark-rose text on a pink tint — readable on every surface. */
+div.tags{display:flex;flex-wrap:wrap;gap:6px}
+div.tags.textcenter{justify-content:center}
+div.tags .ctag,#footer .widget_tag_cloud a.ctag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--r-pill);background:var(--brand-tint);color:var(--brand-text);border:1px solid var(--brand-border);font-size:12.5px!important;font-weight:600;line-height:1.7;white-space:nowrap}
+div.tags .ctag:hover,#footer .widget_tag_cloud a.ctag:hover{background:var(--brand-tint-2);color:var(--brand-text);border-color:var(--brand-strong)}
+/* ---------- Social buttons: ONE component, filled brand circle + white glyph ----------
+   The theme's fill-color variant strips the background but keeps white text
+   (its colours come from per-network classes our markup never had) — that
+   is why header/footer icons were invisible on a white header. */
+.epcl-social-buttons a,.epcl-social-buttons.fill-color a{background:var(--brand-strong);color:#fff;border:0;box-shadow:none}
+.epcl-social-buttons.fill-color a{width:44px}
+.share-buttons .epcl-share-bottom a.button{background:var(--brand-strong);color:#fff}
+/* ---------- Header: flex row, compact menu, room to fit ----------
+   The 1200px container + 9 menu items + socials overflowed and the menu
+   wrapped onto a second row. Wider header container (1400px), tighter
+   menu spacing, socials hidden below 1500px viewports. */
+#header .menu-wrapper .grid-container{display:flex;align-items:center;gap:16px;max-width:1400px}
+#header .logo{flex:none}
+#header nav.main-nav{flex:1;min-width:0}
+#header nav.main-nav ul.menu{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+#header nav.main-nav ul.menu>li{padding:12px 10px}
+#header nav.main-nav ul.menu>li>a{font-size:15px}
+@media (max-width:1500px){#header .epcl-social-buttons{display:none}}
+/* The drawer is a mobile-only pattern: it must never render on desktop,
+   whatever the theme's off-canvas transform does. */
+@media (min-width:768px){#header nav.mobile.main-nav{display:none!important}}
+/* Sticky search button: the theme already shows it centred (40px circle)
+   when sticky — the earlier static override broke it into an oval. No
+   override here on purpose. */
+/* ---------- Cards: image on top, content below ---------- */
+article.card-clean{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:36px}
+article.card-clean .card-thumb{display:block;position:relative;overflow:hidden}
+article.card-clean .card-thumb .fullimage{display:block;width:100%;aspect-ratio:16/9;background-size:cover;background-position:center;transition:transform .5s ease}
+article.card-clean:hover .card-thumb .fullimage{transform:scale(1.03)}
+article.card-clean .card-body{padding:22px 26px 24px}
+article.card-clean .tags{position:static;margin-bottom:10px}
+/* THEME OVERRIDE: the theme absolutely positions .post-title over the image
+   (div.articles article .post-title) and gives its link an inline
+   14px-border highlight — that is what broke every card title (invisible /
+   overlapping / running off the card). Cards put the title in flow. */
+div.articles article.card-clean .post-title{position:relative;left:auto;right:auto;bottom:auto;max-width:none;margin:0 0 10px;text-align:right}
+div.articles article.card-clean .post-title a{display:block;border:0}
+article.card-clean .post-title{font-size:clamp(21px,3.4vw,27px);font-weight:800;line-height:1.65}
+article.card-clean .post-title a{color:var(--ink)}
+article.card-clean .post-title a:hover{color:var(--brand-strong)}
+article.card-clean .post-excerpt{margin-bottom:16px}
+article.card-clean .post-excerpt p{margin:0}
+article.card-clean .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted)}
+article.card-clean .meta .author{display:inline-flex;align-items:center;gap:8px}
+article.card-clean .meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;flex:none}
+article.card-clean .meta .author-name{font-weight:600;color:var(--ink)}
+article.card-clean .meta svg{width:15px;height:15px;fill:var(--brand);vertical-align:-2px;margin-inline-end:3px}
+article.card-clean .continue-reading{display:inline-flex;align-items:center;gap:6px;margin-top:16px;color:var(--brand-strong);font-weight:700;font-size:15px}
+article.card-clean .continue-reading:hover{color:#B91C42}
+/* grid (archive) cards: same language, tighter */
+.articles.grid-posts article.card-clean .card-body{padding:18px 20px}
+.articles.grid-posts article.card-clean .post-title{font-size:19px;line-height:1.7}
+.articles.grid-posts article.card-clean .post-excerpt{font-size:14px}
+.articles.grid-posts article.card-clean .meta{font-size:12px;gap:4px 12px}
+/* ---------- Pagination: one component, one size (40px) ----------
+   The theme made prev/next big purple pills (5px 25px) and numbers small
+   grey circles — mismatched sizes and colours. Now every item is 40px,
+   neutral surface + border; current is the brand fill. Ranges collapse
+   to an ellipsis, so it stays one neat row on mobile too. */
+.epcl-pagination{padding:32px 0}
+.epcl-pagination div.nav{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+.epcl-pagination div.nav a.post-page-numbers,.epcl-pagination div.nav span.post-page-numbers,.epcl-pagination div.nav a.prev-page,.epcl-pagination div.nav a.next-page{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 12px;border-radius:var(--r-md);font-size:15px;font-weight:600;line-height:1;background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);box-shadow:none}
+.epcl-pagination div.nav a.prev-page,.epcl-pagination div.nav a.next-page{padding:0 16px;color:var(--body)}
+.epcl-pagination div.nav a.post-page-numbers:hover,.epcl-pagination div.nav a.prev-page:hover,.epcl-pagination div.nav a.next-page:hover{border-color:var(--brand-strong);color:var(--brand-strong);transform:none;box-shadow:none}
+.epcl-pagination div.nav span.current{background:var(--brand-strong);border-color:var(--brand-strong);color:#fff;cursor:default}
+.epcl-pagination div.nav .pg-dots{color:var(--faint);padding:0 2px;font-weight:600}
+/* ---------- Post page: meta, author, related, siblings ---------- */
+div.meta.absolute .meta-info{font-size:13px}
+#author .flex{display:flex;gap:20px;align-items:flex-start}
+#author .avatar{flex:none}
+#author .avatar a.thumb{display:block;position:relative;width:110px;height:110px;border-radius:50%;overflow:hidden}
+#author .avatar .fullimage{position:absolute;inset:0;background-size:cover;background-position:center}
+#author .info{flex:1;min-width:0}
+#author .info h4{margin:0 0 4px}
+#author .info .position{margin:0 0 8px}
+#author .info p{margin:0 0 14px}
+#author .info .button{margin-top:4px}
+/* post meta author avatar (30px disc) */
+div.meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;vertical-align:middle;margin-inline-end:6px}
+section.related article .thumb,section.siblings article .thumb{position:relative;display:block;overflow:hidden;border-radius:8px}
+section.related article .thumb img{display:block;width:100%;height:200px;object-fit:cover}
+/* siblings thumb is a full-bleed absolute layer (theme positions it); the
+   <img> inside simply fills it. Title uses the theme's white .mask highlight. */
+section.siblings article .thumb{position:absolute;inset:0;border-radius:0}
+section.siblings article .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.no-comments-note{color:var(--muted);text-align:center;padding:18px 0}
+.static-comments-note{font-size:13px;color:var(--faint);text-align:center;margin-top:18px}
+/* permalink copy button: visible dark icon on the grey bar */
+.permalink .copy svg{fill:var(--ink)}
+.permalink .copy:hover svg{fill:var(--brand-strong)}
+/* ---------- Footer: consistent alignment + real bottom bar ---------- */
+#footer .widget_tag_cloud ul{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+#footer .widget_tag_cloud ul li{display:inline-flex;margin:0;padding:0;border:0}
+#footer .widget .about p{color:var(--muted)}
+#footer .published{padding-bottom:10px}
+#footer .bottom-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 26px;border-top:1px solid var(--line)}
+#footer .bottom-bar .copyright{margin:0;font-size:13.5px;color:var(--muted)}
+#footer .bottom-bar .epcl-social-buttons{margin:0}
+/* ---------- Sidebar widgets ---------- */
+.widget_epcl_posts_thumbs .item{position:relative;padding-right:100px;min-height:80px;margin-bottom:20px}
+.widget_epcl_posts_thumbs .item .thumb{position:absolute;right:0;top:0;width:80px;height:80px;border-radius:8px;background-size:cover;background-position:center}
+.widget_epcl_posts_thumbs .item .title{font-size:15px;font-weight:600;line-height:1.7;margin:0 0 4px}
+.widget_epcl_posts_thumbs .item time{font-size:12.5px;color:var(--faint)}
+.widget_recent_comments li a{display:block;font-size:14px;line-height:1.7}
+.widget_recent_comments li .comment-author{font-weight:600}
+/* ---------- Forms: 48px fields, brand focus ring ---------- */
+.wpcf7-form input[type=text],.wpcf7-form input[type=email],.wpcf7-form textarea{border:1px solid var(--line-strong);border-radius:var(--r-md);font-size:15px;color:var(--ink);background:var(--surface)}
+.wpcf7-form input[type=text],.wpcf7-form input[type=email]{height:48px;padding:0 14px}
+.wpcf7-form textarea{min-height:150px;padding:12px 14px}
+.wpcf7-form input:focus,.wpcf7-form textarea:focus{border-color:var(--brand-strong);outline:none;box-shadow:0 0 0 3px var(--brand-tint-2)}
+/* ---------- Donate page: copyable wallet + unbreakable email ---------- */
+.wallet-wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:10px 0}
+.wallet-address{display:inline-block;direction:ltr;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:13px;overflow-wrap:anywhere;max-width:100%}
+.copy-address{flex:none}
+.email-inline{white-space:nowrap}
+/* ---------- Mobile drawer: the theme's fixed side panel (left), RTL text ---------- */
+nav.mobile.main-nav{background:#fff;text-align:right;direction:rtl}
+nav.mobile.main-nav ul.menu>li>a{font-weight:600;min-height:44px;display:flex;align-items:center}
+nav.mobile.main-nav ul.menu li.menu-item-has-children.open>ul.sub-menu{opacity:1;visibility:visible;max-height:50vh!important;overflow:auto;padding:5px 0 0}
+nav.mobile.main-nav ul.menu li.menu-item-has-children.open:after{color:var(--brand)}
+/* ---------- Responsive / overflow guards — no horizontal scroll on mobile ---------- */
 .post-content img,.featured-image img,.fullwidth,.post-format-image img{max-width:100%!important;height:auto!important}
 /* Only links may split mid-token (long URLs); normal prose words never break early */
 .post-content a{overflow-wrap:break-word}
@@ -41,93 +202,6 @@ pre[class*="brush:"]{direction:ltr!important;text-align:left!important;backgroun
 .post-content pre{max-width:100%}
 .search-results article{margin-bottom:18px}
 .search-results .result-title{font-size:18px}
-/* ---- Category chips: real pills with gaps, never jammed together ---- */
-div.tags .ctag{display:inline-block;padding:3px 12px;margin:0 0 6px 6px;border-radius:20px;color:#fff!important;font-size:12.5px;font-weight:600;line-height:1.8;white-space:nowrap}
-div.tags .ctag:hover{color:#fff;opacity:.85}
-/* ---- Clean cards: image on top, content below ---- */
-article.card-clean{background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(7,10,25,.06);margin-bottom:36px}
-article.card-clean .card-thumb{display:block;position:relative;overflow:hidden}
-article.card-clean .card-thumb .fullimage{display:block;width:100%;aspect-ratio:16/9;background-size:cover;background-position:center;transition:transform .5s ease}
-article.card-clean:hover .card-thumb .fullimage{transform:scale(1.03)}
-article.card-clean .card-body{padding:22px 26px 24px}
-article.card-clean .tags{position:static;margin-bottom:10px}
-article.card-clean .post-title{font-size:clamp(21px,3.4vw,27px);font-weight:800;line-height:1.65;margin:0 0 10px}
-article.card-clean .post-title a{color:#242323}
-article.card-clean .post-title a:hover{color:#FF486A}
-article.card-clean .post-excerpt{margin-bottom:16px}
-article.card-clean .post-excerpt p{margin:0}
-article.card-clean .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding-top:14px;border-top:1px solid #f0f0f0;color:#596172}
-article.card-clean .meta .author{display:inline-flex;align-items:center;gap:8px}
-article.card-clean .meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;flex:none}
-article.card-clean .meta .author-name{font-weight:600;color:#242323}
-article.card-clean .meta svg{width:15px;height:15px;fill:#FF486A;vertical-align:-2px;margin-inline-end:3px}
-article.card-clean .continue-reading{display:inline-block;margin-top:16px;color:#FF486A;font-weight:700;font-size:15px}
-article.card-clean .continue-reading:hover{color:#e03a5c}
-/* grid (archive) cards: same language, tighter */
-.articles.grid-posts article.card-clean .card-body{padding:18px 20px}
-.articles.grid-posts article.card-clean .post-title{font-size:19px;line-height:1.7}
-.articles.grid-posts article.card-clean .post-excerpt{font-size:14px}
-.articles.grid-posts article.card-clean .meta{font-size:12px;gap:4px 12px}
-/* ---- Post page: meta pill labels, author box, related/siblings ---- */
-div.meta.absolute .meta-info{font-size:13px}
-#author .flex{display:flex;gap:20px;align-items:flex-start}
-#author .avatar{flex:none}
-#author .avatar a.thumb{display:block;position:relative;width:110px;height:110px;border-radius:50%;overflow:hidden}
-#author .avatar .fullimage{position:absolute;inset:0;background-size:cover;background-position:center}
-#author .info{flex:1;min-width:0}
-#author .info h4{margin:0 0 4px}
-#author .info .position{margin:0 0 8px}
-#author .info p{margin:0 0 14px}
-#author .info .button{margin-top:4px}
-/* post meta author avatar (30px disc) */
-div.meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;vertical-align:middle;margin-inline-end:6px}
-section.related article .thumb,section.siblings article .thumb{position:relative;display:block;overflow:hidden;border-radius:8px}
-section.related article .thumb img{display:block;width:100%;height:200px;object-fit:cover}
-/* siblings thumb is a full-bleed absolute layer (theme positions it); the
-   <img> inside simply fills it. Title uses the theme's white .mask highlight. */
-section.siblings article .thumb{position:absolute;inset:0;border-radius:0}
-section.siblings article .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.no-comments-note{color:#596172;text-align:center;padding:18px 0}
-.static-comments-note{font-size:13px;color:#9aa0a6;text-align:center;margin-top:18px}
-/* permalink copy button: visible dark icon on the grey bar */
-.permalink .copy svg{fill:#242323}
-.permalink .copy:hover svg{fill:#FF486A}
-/* ---- Numbered pagination ---- */
-.epcl-pagination div.nav a.post-page-numbers,.epcl-pagination div.nav span.post-page-numbers{display:inline-block;min-width:36px;height:36px;line-height:36px;padding:0 12px;margin:0 4px;border-radius:18px;font-size:14px;font-weight:600;text-align:center}
-.epcl-pagination div.nav span.current{background:#FF486A;color:#fff;cursor:default}
-.epcl-pagination div.nav a.post-page-numbers{background:#f5f5f5;color:#242323}
-.epcl-pagination div.nav a.post-page-numbers:hover{background:#FF486A;color:#fff}
-/* ---- Footer: consistent alignment + real bottom bar ---- */
-#footer .widget_tag_cloud ul li{display:block;text-align:right;margin:0}
-#footer .widget_tag_cloud ul li a{display:block;padding:8px 0;color:#596172;border-bottom:1px solid #f0f0f0}
-#footer .widget_tag_cloud ul li a:hover{color:#FF486A}
-#footer .widget .about p{color:#596172}
-#footer .published{padding-bottom:10px}
-#footer .bottom-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 26px;border-top:1px solid #eee}
-#footer .bottom-bar .copyright{margin:0;font-size:13.5px;color:#596172}
-#footer .bottom-bar .epcl-social-buttons{margin:0}
-/* ---- Sidebar widgets ---- */
-.widget_epcl_posts_thumbs .item{position:relative;padding-right:100px;min-height:80px;margin-bottom:20px}
-.widget_epcl_posts_thumbs .item .thumb{position:absolute;right:0;top:0;width:80px;height:80px;border-radius:8px;background-size:cover;background-position:center}
-.widget_epcl_posts_thumbs .item .title{font-size:15px;font-weight:600;line-height:1.7;margin:0 0 4px}
-.widget_epcl_posts_thumbs .item time{font-size:12.5px;color:#9aa0a6}
-.widget_recent_comments li a{display:block;font-size:14px;line-height:1.7}
-.widget_recent_comments li .comment-author{font-weight:600}
-/* ---- Donate page: copyable wallet + unbreakable email ---- */
-.wallet-wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:10px 0}
-.wallet-address{display:inline-block;direction:ltr;background:#f6f8fa;border:1px solid #e5e7eb;border-radius:6px;padding:8px 12px;font-size:13px;overflow-wrap:anywhere;max-width:100%}
-.copy-address{flex:none}
-.email-inline{white-space:nowrap}
-/* ---- Contact form: saner field heights ---- */
-.wpcf7-form input[type=text],.wpcf7-form input[type=email]{height:48px}
-.wpcf7-form textarea{min-height:150px}
-/* ---- Sticky header: keep the search button available while scrolled ---- */
-#header.is-sticky div.menu-wrapper .epcl-search-button{display:inline-flex!important;position:static;top:auto;right:auto;align-self:center;margin-inline-start:12px}
-/* ---- Mobile drawer: the theme's fixed side panel (left), RTL text ---- */
-nav.mobile.main-nav{background:#fff;text-align:right;direction:rtl}
-nav.mobile.main-nav ul.menu>li>a{font-weight:600}
-nav.mobile.main-nav ul.menu li.menu-item-has-children.open>ul.sub-menu{opacity:1;visibility:visible;max-height:50vh!important;overflow:auto;padding:5px 0 0}
-nav.mobile.main-nav ul.menu li.menu-item-has-children.open:after{color:#FF486A}
 @media (max-width:767px){
   body{font-size:16px;line-height:1.9}
   h1.main-title,.post-title{font-size:23px}
