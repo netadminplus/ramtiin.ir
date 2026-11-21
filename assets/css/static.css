@@ -1,0 +1,48 @@
+/* static-only additions for ramtiin.ir (theme CSS does the rest) */
+/* Vazirmatn — free, standard Persian web font, self-hosted (variable weight) */
+@font-face{font-family:'Vazirmatn';src:url('../fonts/Vazirmatn-Variable.woff2') format('woff2-variations');font-weight:100 900;font-style:normal;font-display:swap}
+body,button,input,select,textarea,.title,h1,h2,h3,h4,h5,h6,#header nav ul.menu>li>a,#header nav ul.sub-menu li a,div.meta,div.tags,aside .widget,#footer .widget,.epcl-button,.button{font-family:'Vazirmatn',Tahoma,sans-serif!important}
+/* Typography scale (Persian standard: generous line-height, clamp() for fluid type) */
+body{font-size:16px;line-height:1.9}
+.post-content p,.post-excerpt p{line-height:1.9}
+h1.main-title,.post-title{font-size:clamp(23px,5vw,31px);line-height:1.6}
+.post-content h2{font-size:clamp(20px,4vw,25px);line-height:1.7}
+.post-content h3{font-size:clamp(18px,3.5vw,21px);line-height:1.7}
+.post-content h4{font-size:clamp(16px,3vw,19px);line-height:1.7}
+.post-excerpt{font-size:15px;line-height:1.9}
+.meta,.min-read,.views-counter{font-size:13px}
+/* Responsive / overflow guards — no horizontal scroll on mobile */
+.post-content img,.featured-image img,.fullwidth,.post-format-image img{max-width:100%!important;height:auto!important}
+/* Only links may split mid-token (long URLs); normal prose words never break early */
+.post-content a{overflow-wrap:break-word}
+.post-content code{overflow-wrap:break-word}
+.post-content table{display:block;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.post-content iframe{max-width:100%;width:100%;height:auto;aspect-ratio:16/9}
+.permalink input{max-width:100%;box-sizing:border-box}
+.grid-container{box-sizing:border-box}
+.search-field{font-size:16px}
+.mfp-hide{display:none!important}
+.mfp-hide.open{display:flex!important;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);align-items:flex-start;justify-content:center;padding-top:15vh}
+.mfp-hide.open .search-form{display:flex;width:min(680px,90%)}
+.epcl-comments.hidden{display:none}
+#back-to-top{display:none;position:fixed;bottom:24px;left:24px;z-index:900}
+/* Card hover mask sprite (urban-sprite-op.png) could not be recovered from the
+   old server — disable the mask so there is no failed request; hover still works */
+.mask-effect .mask{-webkit-mask:none!important;mask:none!important}
+/* SyntaxHighlighter code blocks (plugin JS not shipped; keep code readable) */
+pre[class*="brush:"]{direction:ltr!important;text-align:left!important;background:#f6f8fa!important;border:1px solid #e5e7eb;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Consolas,Monaco,monospace!important;font-size:13.5px;line-height:1.7;color:#24292f;white-space:pre}
+.post-content pre{max-width:100%}
+.search-results article{margin-bottom:18px}
+.search-results .result-title{font-size:18px}
+@media (max-width:767px){
+  body{font-size:16px;line-height:1.9}
+  h1.main-title,.post-title{font-size:23px}
+  .post-content h2{font-size:20px}
+  .grid-container{padding-left:15px;padding-right:15px}
+  /* THEME BUG FIX: the theme never resets .grid-70/.grid-30 on mobile, so the
+     article text sat in a 70%-wide column (~245px on a 390px phone) and lines
+     broke early with 30% empty space beside them. Full width on mobile. */
+  .grid-70,.grid-30{width:100%!important;float:none!important}
+  #header nav.main-nav{display:none}
+  body.menu-open #header nav.main-nav{display:block}
+}

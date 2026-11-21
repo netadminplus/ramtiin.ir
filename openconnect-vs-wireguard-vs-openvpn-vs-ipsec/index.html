@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa-IR" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- This site is optimized with the Yoast SEO plugin v28.1 - https://yoast.com/product/yoast-seo-wordpress/ -->
+<title>مقایسه OpenConnect و WireGuard و OpenVPN و IPsec | کدام VPN بهتر است؟ - رامتین</title>
+<meta name="description" content="مقایسه OpenConnect و WireGuard WireGuard و OpenVPN و IPsec از نظر امنیت، سرعت، پایداری، مدیریت کاربران، مصرف منابع و سناریوهای مختلف استفاده." />
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<link rel="canonical" href="https://ramtiin.ir/openconnect-vs-wireguard-vs-openvpn-vs-ipsec/" />
+<meta property="og:locale" content="fa_IR" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="مقایسه OpenConnect و WireGuard و OpenVPN و IPsec | کدام VPN بهتر است؟ - رامتین" />
+<meta property="og:description" content="مقایسه OpenConnect و WireGuard WireGuard و OpenVPN و IPsec از نظر امنیت، سرعت، پایداری، مدیریت کاربران، مصرف منابع و سناریوهای مختلف استفاده." />
+<meta property="og:url" content="https://ramtiin.ir/openconnect-vs-wireguard-vs-openvpn-vs-ipsec/" />
+<meta property="og:site_name" content="رامتین" />
+<meta property="article:published_time" content="2026-07-16T08:13:18+00:00" />
+<meta property="article:modified_time" content="2026-07-16T08:13:20+00:00" />
+<meta property="og:image" content="https://ramtiin.ir/wp-content/uploads/2026/07/openconnect-vs-wireguard-vs-openvpn-vs-ipsec-ramtiin.ir_.webp" />
+	<meta property="og:image:width" content="900" />
+	<meta property="og:image:height" content="500" />
+	<meta property="og:image:type" content="image/webp" />
+<meta name="author" content="رامتین رحمانی نژاد" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:label1" content="نوشته‌شده بدست" />
+	<meta name="twitter:data1" content="رامتین رحمانی نژاد" />
+	<meta name="twitter:label2" content="زمان تقریبی برای خواندن" />
+	<meta name="twitter:data2" content="6 دقیقه" />
+<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"Article","@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/#article","isPartOf":{"@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/"},"author":{"name":"رامتین رحمانی نژاد","@id":"https:\/\/ramtiin.ir\/#\/schema\/person\/dc6ce1aa6eec5e39e6693d899fc6c429"},"headline":"مقایسه OpenConnect و WireGuard و OpenVPN و IPsec؛ کدام VPN برای شما مناسب‌تر است؟","datePublished":"2026-07-16T08:13:18+00:00","dateModified":"2026-07-16T08:13:20+00:00","mainEntityOfPage":{"@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/"},"wordCount":126,"commentCount":0,"publisher":{"@id":"https:\/\/ramtiin.ir\/#\/schema\/person\/dc6ce1aa6eec5e39e6693d899fc6c429"},"image":{"@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/#primaryimage"},"thumbnailUrl":"https:\/\/ramtiin.ir\/wp-content\/uploads\/2026\/07\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec-ramtiin.ir_.webp","articleSection":["شبکه","لینوکس"],"inLanguage":"fa-IR","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/#respond"]}]},{"@type":"WebPage","@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/","url":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/","name":"مقایسه OpenConnect و WireGuard و OpenVPN و IPsec | کدام VPN بهتر است؟ - رامتین","isPartOf":{"@id":"https:\/\/ramtiin.ir\/#website"},"primaryImageOfPage":{"@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/#primaryimage"},"image":{"@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/#primaryimage"},"thumbnailUrl":"https:\/\/ramtiin.ir\/wp-content\/uploads\/2026\/07\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec-ramtiin.ir_.webp","datePublished":"2026-07-16T08:13:18+00:00","dateModified":"2026-07-16T08:13:20+00:00","description":"مقایسه OpenConnect و WireGuard WireGuard و OpenVPN و IPsec از نظر امنیت، سرعت، پایداری، مدیریت کاربران، مصرف منابع و سناریوهای مختلف استفاده.","breadcrumb":{"@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/#breadcrumb"},"inLanguage":"fa-IR","potentialAction":[{"@type":"ReadAction","target":["https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/"]}]},{"@type":"ImageObject","inLanguage":"fa-IR","@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/#primaryimage","url":"https:\/\/ramtiin.ir\/wp-content\/uploads\/2026\/07\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec-ramtiin.ir_.webp","contentUrl":"https:\/\/ramtiin.ir\/wp-content\/uploads\/2026\/07\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec-ramtiin.ir_.webp","width":900,"height":500,"caption":"مقایسه OpenConnect، WireGuard، OpenVPN و IPsec"},{"@type":"BreadcrumbList","@id":"https:\/\/ramtiin.ir\/openconnect-vs-wireguard-vs-openvpn-vs-ipsec\/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"خانه","item":"https:\/\/ramtiin.ir\/"},{"@type":"ListItem","position":2,"name":"مقایسه OpenConnect و WireGuard و OpenVPN و IPsec؛ کدام VPN برای شما مناسب‌تر است؟"}]},{"@type":"WebSite","@id":"https:\/\/ramtiin.ir\/#website","url":"https:\/\/ramtiin.ir\/","name":"رامتین","description":"پشتیبانی شبکه","publisher":{"@id":"https:\/\/ramtiin.ir\/#\/schema\/person\/dc6ce1aa6eec5e39e6693d899fc6c429"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/ramtiin.ir\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"fa-IR"},{"@type":["Person","Organization"],"@id":"https:\/\/ramtiin.ir\/#\/schema\/person\/dc6ce1aa6eec5e39e6693d899fc6c429","name":"رامتین رحمانی نژاد","image":{"@type":"ImageObject","inLanguage":"fa-IR","@id":"https:\/\/ramtiin.ir\/wp-content\/uploads\/2021\/10\/Ramtin-Rahmani-Nejad-Asil-96x96.jpg","url":"https:\/\/ramtiin.ir\/wp-content\/uploads\/2021\/10\/Ramtin-Rahmani-Nejad-Asil-96x96.jpg","contentUrl":"https:\/\/ramtiin.ir\/wp-content\/uploads\/2021\/10\/Ramtin-Rahmani-Nejad-Asil-96x96.jpg","caption":"رامتین رحمانی نژاد"},"logo":{"@id":"https:\/\/ramtiin.ir\/wp-content\/uploads\/2021\/10\/Ramtin-Rahmani-Nejad-Asil-96x96.jpg"},"description":"از سال 1385 در حوزه آی‌تی و شبکه فعالیت می‌کنم. در راه اندازی و پشتیبانی شبکه‌ و سرویس‌های مایکروسافت، لینوکس، سیسکو، میکروتیک، VOIP، ارتباطات رادیویی و مدیریت سرور تخصص دارم. برای مشاوره، اجرای پروژه و پشتیبانی شبکه با من تماس بگیرین :)"}]}</script>
+<!-- / Yoast SEO plugin. -->
+<link rel="icon" href="/wp-content/uploads/2021/10/cropped-favicon-ramtiin.ir_.png" sizes="32x32">
+<link rel="icon" href="/wp-content/uploads/2021/10/cropped-favicon-ramtiin.ir_.png" sizes="192x192">
+<link rel="apple-touch-icon" href="/wp-content/uploads/2021/10/cropped-favicon-ramtiin.ir_.png">
+<link rel="stylesheet" href="/assets/css/style.min.css">
+<link rel="stylesheet" href="/assets/css/rtl.css">
+<link rel="stylesheet" href="/assets/css/customizer.css">
+<link rel="stylesheet" href="/assets/css/static.css">
+<link rel="stylesheet" href="/assets/sh/shCore.css">
+<link rel="stylesheet" href="/assets/sh/shThemeDefault.css">
+<link rel="alternate" type="application/rss+xml" title="رامتین" href="/feed/">
+
+</head>
+<body class="rtl single single-post postid-1993 single-format-standard">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none;">
+<symbol id="tag-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M10.9 2.1l9.899 1.415 1.414 9.9-9.192 9.192a1 1 0 0 1-1.414 0l-9.9-9.9a1 1 0 0 1 0-1.414L10.9 2.1zm.707 2.122L3.828 12l8.486 8.485 7.778-7.778-1.06-7.425-7.425-1.06zm2.12 6.364a2 2 0 1 1 2.83-2.829 2 2 0 0 1-2.83 2.829z"/>
+</g>
+</symbol>
+<symbol id="copy-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"/>
+</g>
+</symbol>
+<symbol id="comments-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M7.291 20.824L2 22l1.176-5.291A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.956 9.956 0 0 1-4.709-1.176z"/>
+</g>
+</symbol>
+<symbol id="views-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 5-2.47.27.773.5 1.604.5 2.47A7.5 7.5 0 0 1 12 23z"/>
+</g>
+</symbol>
+<symbol id="search-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/>
+</g>
+</symbol>
+<symbol id="send-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" />
+</g>        
+</symbol>
+<symbol id="arrow-down-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M13 16.172l5.364-5.364 1.414 1.414L12 20l-7.778-7.778 1.414-1.414L11 16.172V4h2v12.172z"/>
+</g>     
+</symbol>
+<symbol id="star-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928z"/>
+</g>
+</symbol>
+<symbol id="menu-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z"/>
+</g>
+</symbol>
+<symbol id="close-icon" viewBox="0 0 24 24">
+<g>
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/>
+</g>
+</symbol>
+<symbol id="clock-icon" viewBox="0 0 24 24">
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-8h4v2h-6V7h2v5z"/>
+</symbol>
+<symbol id="clock-fill-icon" viewBox="0 0 24 24">
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm1-10V7h-2v7h6v-2h-4z"/>
+</symbol>
+<symbol id="tiktok-icon" viewBox="0 0 512 512">
+<path fill="none" d="M0 0h24v24H0z"/>
+<path d="m480.32 128.39c-29.22 0-56.18-9.68-77.83-26.01-24.83-18.72-42.67-46.18-48.97-77.83-1.56-7.82-2.4-15.89-2.48-24.16h-83.47v228.08l-.1 124.93c0 33.4-21.75 61.72-51.9 71.68-8.75 2.89-18.2 4.26-28.04 3.72-12.56-.69-24.33-4.48-34.56-10.6-21.77-13.02-36.53-36.64-36.93-63.66-.63-42.23 33.51-76.66 75.71-76.66 8.33 0 16.33 1.36 23.82 3.83v-62.34-22.41c-7.9-1.17-15.94-1.78-24.07-1.78-46.19 0-89.39 19.2-120.27 53.79-23.34 26.14-37.34 59.49-39.5 94.46-2.83 45.94 13.98 89.61 46.58 121.83 4.79 4.73 9.82 9.12 15.08 13.17 27.95 21.51 62.12 33.17 98.11 33.17 8.13 0 16.17-.6 24.07-1.77 33.62-4.98 64.64-20.37 89.12-44.57 30.08-29.73 46.7-69.2 46.88-111.21l-.43-186.56c14.35 11.07 30.04 20.23 46.88 27.34 26.19 11.05 53.96 16.65 82.54 16.64v-60.61-22.49c.02.02-.22.02-.24.02z"/>
+</symbol>
+</svg>
+<header id="header" class="classic enable-sticky enable-sticky-mobile">
+<div class="menu-wrapper"><div class="grid-container">
+<div class="menu-mobile"><svg class="icon ularge open"><use xlink:href="#menu-icon"></use></svg><svg class="icon ularge close"><use xlink:href="#close-icon"></use></svg></div>
+<div class="logo text-logo"><a href="/" class="title ularge no-margin"> رامتین<span class="dot"></span></a></div>
+<div class="epcl-social-buttons fill-color hide-on-tablet hide-on-mobile hide-on-desktop-sm">
+<a class="button circle" href="https://www.linkedin.com/in/ramtin-rahmani" target="_blank" rel="nofollow noopener" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+<a class="button circle" href="https://instagram.com/ramtiin.ir" target="_blank" rel="nofollow noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+<a class="button circle" href="https://www.youtube.com/c/netadminplus" target="_blank" rel="nofollow noopener" aria-label="YouTube"><i class="fa fa-youtube"></i></a>
+<a class="button circle" href="https://t.me/netadminplus" target="_blank" rel="nofollow noopener" aria-label="Telegram"><i class="fa fa-telegram"></i></a>
+<a class="button circle" href="/contact/" aria-label="Email"><i class="fa fa-envelope-o"></i></a>
+</div>
+<a href="#search-lightbox" class="lightbox epcl-search-button button circle mfp-inline" aria-label="جستجو"><svg class="icon"><use xlink:href="#search-icon"></use></svg></a>
+<nav class="main-nav"><ul id="menu-اصلی-1" class="menu"><li><a href="/">صفحه اصلی</a></li><li><a href="/آموزش-میکروتیک/">دوره‌های آموزش میکروتیک</a></li><li><a href="/category/mikrotik/">میکروتیک</a></li><li><a href="/category/linux/">لینوکس</a></li><li><a href="/category/windows/">ویندوز</a></li><li><a href="/category/voip/">VOIP</a></li><li><a href="/category/tricks/">ترفند</a></li><li class="menu-item-has-children"><a href="#">خدمات</a><ul class="sub-menu"><li><a href="/پشتیبانی-شبکه-در-شیراز/">پشتیبانی شبکه در شیراز</a></li><li><a href="/راه-اندازی-شبکه-در-شیراز/">راه‌اندازی شبکه در شیراز</a></li><li><a href="/پشتیبانی-تلفن-ویپ/">پشتیبانی تلفن ویپ</a></li></ul></li><li class="menu-item-has-children"><a href="#">رامتین</a><ul class="sub-menu"><li><a href="/درباره-من/">درباره من</a></li><li><a href="/contact/">تماس با من</a></li><li><a href="/donate/">حمایت مالی</a></li></ul></li></ul></nav>
+</div></div>
+<div class="menu-overlay hide-on-desktop"></div>
+</header>
+<div id="search-lightbox" class="mfp-hide grid-container grid-small grid-parent">
+<h4 class="title">برای بستن ESC را فشار دهید</h4>
+<form action="/search/" method="get" class="search-form">
+<input type="text" name="q" id="s" class="search-field" placeholder="برای شروع جستجو تایپ کنید ..." required>
+<button type="submit" class="submit" aria-label="تایید"><svg class="icon main-color"><use xlink:href="#search-icon"></use></svg></button>
+</form>
+</div>
+<main class="main"><div class="content row"><div class="epcl-page-wrapper">
+<div class="left-content grid-70 np-mobile">
+<article class="main-article post-1993">
+<header><div class="post-format-image post-format-wrapper"><div class="featured-image">
+<div class="epcl-loader"><img src="/wp-content/uploads/2026/07/openconnect-vs-wireguard-vs-openvpn-vs-ipsec-ramtiin.ir_.webp" class="fullwidth wp-post-image" alt="مقایسه OpenConnect و WireGuard و OpenVPN و IPsec؛ کدام VPN برای شما مناسب‌تر است؟" fetchpriority="high"></div>
+</div></div>
+<div class="info"><h1 class="main-title title">مقایسه OpenConnect و WireGuard و OpenVPN و IPsec؛ کدام VPN برای شما مناسب‌تر است؟</h1></div>
+<div class="meta absolute">
+<a href="/openconnect-vs-wireguard-vs-openvpn-vs-ipsec/#show-comments" class="comments meta-info mobile" title="0 دیدگاه"><svg class="icon"><use xlink:href="#comments-icon"></use></svg> <span class="comment-count">0</span></a>
+<span class="views-counter meta-info mobile comments" title="18 Views"><svg class="icon"><use xlink:href="#views-icon"></use></svg> 18</span>
+<div class="min-read meta-info" title="17 Min Read"><svg class="icon"><use xlink:href="#clock-fill-icon"></use></svg> 17</div>
+</div></header>
+<div class="meta"><a href="/author/ramtin-rahmanigmail-com/" class="author meta-info"><span class="author-image cover" style="background-image:url(/wp-content/uploads/2021/10/Ramtin-Rahmani-Nejad-Asil.jpg)"></span><span class="author-name">رامتین رحمانی نژاد</span></a>
+<time class="meta-info" datetime="2026-07-16">16 جولای, 2026</time>
+<div class="min-read"><span class="count">17</span> دقیقه مطالعه</div></div>
+<section class="post-content"><div class="text">
+<p class="wp-block-paragraph">مقایسه OpenConnect و WireGuard و OpenVPN و IPSec. <a href="https://ramtiin.ir/%d9%85%d8%b9%d9%85%d8%a7%d8%b1%db%8c-openconnect/" target="_blank" rel="noreferrer noopener">بعد از آشنایی با معماری OpenConnect</a>، احتمالاً اولین سؤالی که براتون پیش میاد اینه:</p>
+
+
+
+<p class="wp-block-paragraph"><strong>اصلاً چرا باید OpenConnect رو انتخاب کنیم؟</strong></p>
+
+
+
+<p class="wp-block-paragraph">مگه WireGuard سریع‌تر نیست؟</p>
+
+
+
+<p class="wp-block-paragraph">مگه OpenVPN قدیمی‌تر و امتحان خودش رو پس نداده؟</p>
+
+
+
+<p class="wp-block-paragraph">مگه IPsec استاندارد سازمانی نیست؟</p>
+
+
+
+<p class="wp-block-paragraph">واقعیت اینه که هیچ جواب واحدی برای این سؤال وجود نداره.</p>
+
+
+
+<p class="wp-block-paragraph">اگر کسی بدون اینکه درباره سناریوی شما سؤال بپرسه بگه:</p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">فلان VPN بهترینه!</p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph">احتمالاً داره بیش از حد ساده‌سازی می‌کنه. چون هر کدوم از این تکنولوژی‌ها برای یک هدف خاص طراحی شدن.</p>
+
+
+
+<p class="wp-block-paragraph">دقیقاً مثل اینه که بپرسیم: <strong>کامیون بهتره یا موتور؟</strong></p>
+
+
+
+<p class="wp-block-paragraph">جواب درست اینه که هیچ‌کدوم! هر کدوم برای یه کاری ساخته شدن.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">قبل از مقایسه، یه اشتباه رایج</h2>
+
+
+
+<p class="wp-block-paragraph">یکی از بزرگ‌ترین اشتباه‌هایی که توی اینترنت زیاد دیده میشه اینه که VPNها فقط بر اساس سرعت مقایسه میشن.</p>
+
+
+
+<p class="wp-block-paragraph">مثلاً میگن: WireGuard سریع‌تره. OpenVPN کندتره. پس WireGuard بهتره!</p>
+
+
+
+<p class="wp-block-paragraph">در حالی که سرعت فقط یکی از ده‌ها معیار انتخاب یک VPN محسوب میشه.</p>
+
+
+
+<p class="wp-block-paragraph">گاهی اوقات سرعت اصلاً مهم‌ترین فاکتور نیست.</p>
+
+
+
+<p class="wp-block-paragraph">فرض کنین مدیر شبکه یک شرکت ۵۰۰ نفره هستین.</p>
+
+
+
+<p class="wp-block-paragraph">براتون مهم‌تره:</p>
+
+
+
+<ul class="wp-block-list">
+<li>احراز هویت کاربران</li>
+
+
+
+<li>اتصال به Active Directory</li>
+
+
+
+<li>کنترل دسترسی</li>
+
+
+
+<li>مدیریت Sessionها</li>
+
+
+
+<li>ثبت Log</li>
+
+
+
+<li>تعریف Policy</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">یا اینکه صرفاً ۵ درصد سرعت بیشتر داشته باشین؟</p>
+
+
+
+<p class="wp-block-paragraph">احتمالاً گزینه اول.</p>
+
+
+
+<p class="wp-block-paragraph">پس قبل از هر مقایسه‌ای باید بدونیم هدفمون چیه.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">چهار VPN محبوب امروز</h2>
+
+
+
+<p class="wp-block-paragraph">اگر بخوایم محبوب‌ترین VPNهای امروزی رو نام ببریم، معمولاً این چهار گزینه بیشترین استفاده رو دارن.</p>
+
+
+
+<ul class="wp-block-list">
+<li>OpenConnect (ocserv)</li>
+
+
+
+<li>WireGuard</li>
+
+
+
+<li>OpenVPN</li>
+
+
+
+<li>IPsec / IKEv2</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">هر چهار مورد امنیت بالایی دارن. هر چهار مورد میلیون‌ها کاربر دارن.</p>
+
+
+
+<p class="wp-block-paragraph">اما کاربردشون با هم فرق می‌کنه.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">مقایسه OpenConnect و WireGuard و OpenVPN و IPSec</h2>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th>ویژگی</th><th>OpenConnect</th><th>WireGuard</th><th>OpenVPN</th><th>IPsec</th></tr></thead><tbody><tr><td>امنیت</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td>سرعت</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐</td></tr><tr><td>مصرف CPU</td><td>کم</td><td>بسیار کم</td><td>نسبتاً زیاد</td><td>متوسط</td></tr><tr><td>مدیریت کاربران</td><td>عالی</td><td>محدود</td><td>خوب</td><td>خوب</td></tr><tr><td>LDAP / AD</td><td>بله</td><td>خیر</td><td>بله</td><td>بله</td></tr><tr><td>Cisco Client</td><td>بله</td><td>خیر</td><td>خیر</td><td>خیر</td></tr><tr><td>عبور از NAT</td><td>عالی</td><td>خوب</td><td>خوب</td><td>متوسط</td></tr><tr><td>عبور از فایروال</td><td>عالی</td><td>متوسط</td><td>خوب</td><td>ضعیف‌تر</td></tr><tr><td>Full Tunnel</td><td>بله</td><td>بله</td><td>بله</td><td>بله</td></tr><tr><td>Split Tunnel</td><td>بله</td><td>بله</td><td>بله</td><td>بله</td></tr><tr><td>نصب و راه‌اندازی</td><td>متوسط</td><td>ساده</td><td>متوسط</td><td>نسبتاً پیچیده</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph">اما این جدول فقط یک دید کلی میده. بیاین هر کدوم رو جداگانه بررسی کنیم.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">OpenConnect</h2>
+
+
+
+<p class="wp-block-paragraph">اگر بخوام فقط با یک جمله OpenConnect رو معرفی کنم، میگم:</p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph"><strong>یک SSL VPN سازمانی با امکانات مدیریتی خیلی بالا.</strong></p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph">OpenConnect بیشتر برای این سناریوها طراحی شده:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Remote Access</li>
+
+
+
+<li>سازمان‌ها</li>
+
+
+
+<li>شرکت‌ها</li>
+
+
+
+<li>DevOps</li>
+
+
+
+<li>مدیران شبکه</li>
+
+
+
+<li>دسترسی امن کاربران</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">مزیت اصلیش فقط VPN نیست. بلکه مدیریت کاربران و سیاست‌های دسترسیه.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">WireGuard</h2>
+
+
+
+<p class="wp-block-paragraph">WireGuard داستان کاملاً متفاوتی داره.</p>
+
+
+
+<p class="wp-block-paragraph">هدف سازنده‌ها این بوده که:</p>
+
+
+
+<ul class="wp-block-list">
+<li>کد کمتر</li>
+
+
+
+<li>سرعت بیشتر</li>
+
+
+
+<li>امنیت بالا</li>
+
+
+
+<li>تنظیمات ساده</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">داشته باشن.</p>
+
+
+
+<p class="wp-block-paragraph">به همین دلیل WireGuard فوق‌العاده سریع و سبک شده.</p>
+
+
+
+<p class="wp-block-paragraph">اگر فقط می‌خواین دو تا سرور رو به هم وصل کنین یا یه VPN شخصی راه بندازین، WireGuard یکی از بهترین انتخاب‌های دنیاست.</p>
+
+
+
+<p class="wp-block-paragraph">اما اگر تعداد کاربران زیاد بشه، مدیریت کاربران دیگه به راحتی OpenConnect نیست.</p>
+
+
+
+<p class="wp-block-paragraph">توی این نوشته می‌تونین بیشتر در مورد وایرگارد WireGuard بخونین: <a href="https://ramtiin.ir/%d9%88%d8%a7%db%8c%d8%b1%da%af%d8%a7%d8%b1%d8%af-%d8%ac%db%8c%d8%b3%d8%aa/" target="_blank" rel="noreferrer noopener">WireGuard یا وایرگارد چیست؟</a></p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">OpenVPN</h2>
+
+
+
+<p class="wp-block-paragraph">OpenVPN قدیمی‌ترین عضو این خانواده محسوب میشه.</p>
+
+
+
+<p class="wp-block-paragraph">سال‌هاست که امتحان خودش رو پس داده.</p>
+
+
+
+<p class="wp-block-paragraph">اکوسیستم بسیار بزرگی داره.</p>
+
+
+
+<p class="wp-block-paragraph">تقریباً روی هر سیستم‌عاملی اجرا میشه.</p>
+
+
+
+<p class="wp-block-paragraph">مستنداتش هم فوق‌العاده زیاده.</p>
+
+
+
+<p class="wp-block-paragraph">اما نسبت به WireGuard و OpenConnect مصرف CPU بیشتری داره و کانفیگش هم معمولاً طولانی‌تره.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">IPsec</h2>
+
+
+
+<p class="wp-block-paragraph">IPsec در واقع یک پروتکل محسوب میشه، نه صرفاً یک نرم‌افزار.</p>
+
+
+
+<p class="wp-block-paragraph">خیلی از تجهیزات سازمانی مثل:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Cisco</li>
+
+
+
+<li>Fortinet</li>
+
+
+
+<li>MikroTik</li>
+
+
+
+<li>Sophos</li>
+
+
+
+<li>Juniper</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">از IPsec پشتیبانی می‌کنن.</p>
+
+
+
+<p class="wp-block-paragraph">اگر هدف اتصال Site-to-Site باشه، IPsec هنوز هم یکی از بهترین انتخاب‌هاست.</p>
+
+
+
+<p class="wp-block-paragraph">اما برای Remote Access معمولاً راه‌اندازی و عیب‌یابی اون نسبت به OpenConnect راحت‌تر نیست.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">اگه داخل ایران هستین&#8230;</h2>
+
+
+
+<p class="wp-block-paragraph">برای کاربران ایرانی، موضوع فقط امنیت و سرعت نیست. پایداری اتصال هم اهمیت خیلی زیادی داره.</p>
+
+
+
+<p class="wp-block-paragraph">در سال‌های اخیر، روش‌های فیلترینگ اینترنت در ایران پیچیده‌تر شده و بعضی پروتکل‌ها نسبت به گذشته راحت‌تر شناسایی یا محدود میشن.</p>
+
+
+
+<p class="wp-block-paragraph">یکی از دلایلی که OpenConnect همچنان بین مدیرهای شبکه محبوبه، استفاده از TLS و شباهت ارتباط اولیه اون به ترافیک HTTPS هست. همین ویژگی باعث میشه در خیلی از شرایط، ارتباط پایدارتری نسبت به بعضی پروتکل‌های دیگه داشته باشه.</p>
+
+
+
+<p class="wp-block-paragraph">از طرف دیگه، OpenConnect انعطاف خوبی برای استفاده در معماری‌های چندمرحله‌ای داره. مثلاً میشه یک سرور داخل ایران و یک سرور خارج از کشور رو با یک تونل امن به هم متصل کرد و کاربران از طریق OpenConnect به سرور داخل ایران وصل بشن. این معماری بسته به نوع تونل و روش پیاده‌سازی، می‌تونه پایداری ارتباط رو در برخی سناریوها افزایش بده و از قابلیت‌های تونلینگ و روش‌های مبهم‌سازی (Obfuscation) هم بهره ببره.</p>
+
+
+
+<p class="wp-block-paragraph">البته هیچ راهکاری دائمی نیست و شرایط فیلترینگ ممکنه در طول زمان تغییر کنه.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">کدوم VPN سریع‌تر است؟</h2>
+
+
+
+<p class="wp-block-paragraph">اگر فقط Benchmark رو در نظر بگیریم، معمولاً ترتیب سرعت این شکلیه:</p>
+
+
+
+<p class="wp-block-paragraph">WireGuard</p>
+
+
+
+<p class="wp-block-paragraph">OpenConnect</p>
+
+
+
+<p class="wp-block-paragraph">IPsec</p>
+
+
+
+<p class="wp-block-paragraph">OpenVPN</p>
+
+
+
+<p class="wp-block-paragraph">اما دوباره تأکید می‌کنم. سرعت بهتر لزوما به این معنی نیست که پروتکل VPN از اون یکی ۱۰۰٪ بهتره.</p>
+
+
+
+<p class="wp-block-paragraph">بعضی وقتی‌ها یه پروتکل VPN با وجود سرعت کمتر، انتخاب بسیار منطقی‌تری محسوب میشه.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">من کدوم VPN رو انتخاب می‌کنم؟</h2>
+
+
+
+<p class="wp-block-paragraph">اگر بخوام خیلی خلاصه نظر شخصی خودم رو بگم، معمولاً این‌طوری انتخاب می‌کنم.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Site-to-Site بین روترها</strong>: WireGuard یا IPsec</p>
+
+
+
+<p class="wp-block-paragraph"><strong>VPN شخصی</strong>: WireGuard</p>
+
+
+
+<p class="wp-block-paragraph"><strong>شرکت با کاربران دورکار زیاد</strong>: OpenConnect</p>
+
+
+
+<p class="wp-block-paragraph"><strong>سازمان با اکتیو دایرکتوری</strong>: OpenConnect</p>
+
+
+
+<p class="wp-block-paragraph"><strong>بیشترین سازگاری با سیسکو انی کانکت: </strong>OpenConnect (ocserv)</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">جمع‌بندی</h2>
+
+
+
+<p class="wp-block-paragraph">هر چهار تکنولوژی که توی این مقاله بررسی کردیم، امن، قابل اعتماد و مناسب استفاده در محیط‌های واقعی هستن. تفاوت اصلی اون‌ها در هدف طراحی، امکانات مدیریتی و سناریوهایی هست که برای اون‌ها بهینه شدن.</p>
+
+
+
+<p class="wp-block-paragraph">اگر به دنبال یک VPN سبک و سریع برای ارتباط بین چند دستگاه یا چند سرور هستین، WireGuard انتخاب فوق‌العاده‌ایه.</p>
+
+
+
+<p class="wp-block-paragraph">اگر زیرساخت سازمانی دارین، کاربران متعددی باید به شبکه داخلی متصل بشن، مدیریت دسترسی‌ها براتون اهمیت داره یا می‌خواین از Cisco AnyConnect استفاده کنین، OpenConnect یا همون <strong>ocserv</strong> یکی از بهترین انتخاب‌های موجوده.</p>
+
+
+
+<p class="wp-block-paragraph">در نهایت، انتخاب بهترین VPN بیشتر از اینکه به خود پروتکل وابسته باشه، به نیازهای واقعی پروژه شما بستگی داره.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">در مقاله بعدی</h2>
+
+
+
+<p class="wp-block-paragraph">تا اینجا با OpenConnect، معماری اون و مقایسه OpenConnect و WireGuard و OpenVPN و IPsec آشنا شدین.</p>
+
+
+
+<p class="wp-block-paragraph">توی نوشته بعدی وارد دنیای <strong>OpenConnect VPN Server (ocserv)</strong> میشیم و می‌بینیم دقیقاً این نرم‌افزار چیه، چه اجزایی داره، روی چه سیستم‌عامل‌هایی نصب میشه و قبل از شروع نصب، چه پیش‌نیازهایی باید فراهم باشن.</p>
+
+
+
+<p class="wp-block-paragraph"></p>
+</div></section>
+<div class="tags textcenter"><a href="/category/network/" rel="tag">شبکه</a> , <a href="/category/linux/" rel="tag">لینوکس</a></div>
+
+<div class="share-buttons section np-bottom"><div class="epcl-share-bottom">
+<a class="button circle" href="https://www.facebook.com/sharer/sharer.php?u=https://ramtiin.ir/openconnect-vs-wireguard-vs-openvpn-vs-ipsec/" target="_blank" rel="nofollow noopener" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+<a class="button circle" href="https://t.me/share/url?url=https://ramtiin.ir/openconnect-vs-wireguard-vs-openvpn-vs-ipsec/" target="_blank" rel="nofollow noopener" aria-label="Telegram"><i class="fa fa-telegram"></i></a>
+<a class="button circle" href="https://api.whatsapp.com/send?text=https://ramtiin.ir/openconnect-vs-wireguard-vs-openvpn-vs-ipsec/" target="_blank" rel="nofollow noopener" aria-label="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+<a class="button circle" href="mailto:?subject=%D9%85%D9%82%D8%A7%DB%8C%D8%B3%D9%87%20OpenConnect%20%D9%88%20WireGuard%20%D9%88%20OpenVPN%20%D9%88%20IPsec%D8%9B%20%DA%A9%D8%AF%D8%A7%D9%85%20VPN%20%D8%A8%D8%B1%D8%A7%DB%8C%20%D8%B4%D9%85%D8%A7%20%D9%85%D9%86%D8%A7%D8%B3%D8%A8%E2%80%8C%D8%AA%D8%B1%20%D8%A7%D8%B3%D8%AA%D8%9F&amp;body=https://ramtiin.ir/openconnect-vs-wireguard-vs-openvpn-vs-ipsec/" aria-label="Email"><i class="fa fa-envelope-o"></i></a>
+</div>
+<div class="permalink"><input type="text" name="shortlink" value="https://ramtiin.ir/openconnect-vs-wireguard-vs-openvpn-vs-ipsec/" id="copy-link" readonly aria-label="کپی لینک"><span class="copy"><svg class="icon"><use xlink:href="#copy-icon"></use></svg></span></div></div>
+<div class="epcl-border"></div>
+<section id="author" class="author section with-avatar np-bottom">
+<h3 class="title medium bordered">درباره نویسنده</h3>
+<div class="avatar"><a href="/author/ramtin-rahmanigmail-com/"><span class="author-image cover" style="background-image:url(/wp-content/uploads/2021/10/Ramtin-Rahmani-Nejad-Asil.jpg)"></span></a></div>
+<h4>رامتین رحمانی نژاد</h4><p>رامتین رحمانی نژاد از سال 1385 در حوزه آی‌تی و شبکه فعالیت می‌کنم. در راه اندازی و پشتیبانی شبکه‌ و سرویس‌های مایکروسافت، لینوکس، سیسکو، میکروتیک، VOIP، ارتباطات رادیویی و مدیریت سرور تخصص دارم. برای مشاوره، اجرای پروژه و پشتیبانی شبکه با من تماس بگیرین :)</p>
+<a href="/author/ramtin-rahmanigmail-com/" class="button">مشاهده تمام مقالات</a></section>
+<section class="related section" id="epcl-related-stories"><h3 class="title bordered">شاید دوست داشته باشید</h3><div class="row"><article class="prev grid-33 tablet-grid-33 mobile-grid-50"><a href="/معماری-openconnect/" class="hover-effect"><span class="fullimage cover" style="background-image:url(/wp-content/uploads/2026/07/openconnect-architecture-ramtiin.ir_.webp)"></span></a><div class="info"><h4 class="title usmall no-margin"><a href="/معماری-openconnect/">معماری OpenConnect: ارتباط بین OpenConnect Client، ocserv و Cisco AnyConnect</a></h4><time class="small" datetime="2026-07-02">2 جولای, 2026</time></div></article><article class="prev grid-33 tablet-grid-33 mobile-grid-50"><a href="/openconnect-چیست/" class="hover-effect"><span class="fullimage cover" style="background-image:url(/wp-content/uploads/2026/06/openconnect-vpn-server-ocserv-cisco-anyconnect-ubuntu.webp)"></span></a><div class="info"><h4 class="title usmall no-margin"><a href="/openconnect-چیست/">OpenConnect چیست؟ آشنایی با OpenConnect و ocserv قبل از نصب</a></h4><time class="small" datetime="2026-06-29">29 ژوئن, 2026</time></div></article><article class="prev grid-33 tablet-grid-33 mobile-grid-50"><a href="/container-mikrotik/" class="hover-effect"><span class="fullimage cover" style="background-image:url(/wp-content/uploads/2026/06/mikrotik-container-ramtiin.ir_.webp)"></span></a><div class="info"><h4 class="title usmall no-margin"><a href="/container-mikrotik/">کانتینر در میکروتیک</a></h4><time class="small" datetime="2026-06-23">23 ژوئن, 2026</time></div></article></div></section>
+<section class="siblings section"><h3 class="title bordered">سایر نوشته ها</h3><div class="row"><article class="next grid-50 tablet-grid-50 mobile-grid-100"><a href="/معماری-openconnect/" class="hover-effect"><span class="fullimage cover" style="background-image:url(/wp-content/uploads/2026/07/openconnect-architecture-ramtiin.ir_.webp)"></span></a><div class="info"><span class="meta">نوشته بعدی</span><h4 class="title"><a href="/معماری-openconnect/">معماری OpenConnect: ارتباط بین OpenConnect Client، ocserv و Cisco AnyConnect</a></h4></div></article></div></section>
+</article></div></div></div></main>
+<footer id="footer"><div class="widgets grid-container grid-large"><div class="row large">
+<section class="widget widget_tag_cloud grid-25 tablet-grid-50 mobile-grid-100"><h4 class="widget-title title">دسته بندی ها</h4><ul><li class="cat-item cat-item-103"><a href="/category/devops/">DevOps</a></li><li class="cat-item cat-item-105"><a href="/category/openwrt/">OpenWrt</a></li><li class="cat-item cat-item-6"><a href="/category/voip/">VOIP</a></li><li class="cat-item cat-item-4"><a href="/category/tricks/">ترفند</a></li><li class="cat-item cat-item-1"><a href="/category/uncategorized/">دسته بندی نشده</a></li><li class="cat-item cat-item-5"><a href="/category/network/">شبکه</a></li><li class="cat-item cat-item-27"><a href="/category/linux/">لینوکس</a></li><li class="cat-item cat-item-3"><a href="/category/mikrotik/">میکروتیک</a></li><li class="cat-item cat-item-2"><a href="/category/windows/">ویندوز</a></li></ul></section>
+<section class="widget widget_nav_menu grid-25 tablet-grid-50 mobile-grid-100"><h4 class="widget-title title">فهرست</h4><ul class="menu">
+<li><a href="#">صفحه اصلی</a></li>
+<li><a href="/آموزش-میکروتیک/">دوره‌های آموزش میکروتیک</a></li>
+<li><a href="/درباره-من/">درباره من</a></li>
+<li><a href="/contact/">تماس با من</a></li>
+<li><a href="/donate/">حمایت مالی</a></li>
+<li><a href="/پشتیبانی-شبکه-در-شیراز/">پشتیبانی شبکه</a></li>
+</ul></section>
+<section class="widget widget_epcl_about grid-25 tablet-grid-50 mobile-grid-100"><h4 class="widget-title title">درباره من</h4>
+<div class="about"><a href="/author/ramtin-rahmanigmail-com/" class="author-image cover" style="background-image:url(/wp-content/uploads/2021/10/Ramtin-Rahmani-Nejad-Asil.jpg)"></a>
+<h4 class="title"><a href="/author/ramtin-rahmanigmail-com/">رامتین رحمانی نژاد</a></h4><p>رامتین رحمانی نژاد از سال 1385 در حوزه آی‌تی و شبکه فعالیت می‌کنم. در راه اندازی و پشتیبانی شبکه‌ و سرویس‌های مایکروسافت، لینوکس، سیسکو، میکروتیک، VOIP، ارتباطات رادیویی و مدیریت سرور تخصص دارم. برای مشاوره، اجرای پروژه و پشتیبانی شبکه با من تماس بگیرین :)</p></div></section>
+</div></div>
+<div class="published grid-container"><h2 class="logo"><a href="/" class="title ularge no-margin"> رامتین<span class="dot"></span></a></h2></div>
+<a id="back-to-top" class="button" href="#" aria-label="بازگشت به بالا">↑</a>
+</footer>
+<script src="/assets/sh/shCore.js"></script>
+<script src="/assets/sh/shBrushPlain.js"></script>
+<script>if (window.SyntaxHighlighter) { SyntaxHighlighter.all(); }</script>
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
