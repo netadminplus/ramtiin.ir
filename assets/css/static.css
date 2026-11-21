@@ -2,14 +2,21 @@
 /* Vazirmatn — free, standard Persian web font, self-hosted (variable weight) */
 @font-face{font-family:'Vazirmatn';src:url('../fonts/Vazirmatn-Variable.woff2') format('woff2-variations');font-weight:100 900;font-style:normal;font-display:swap}
 body,button,input,select,textarea,.title,h1,h2,h3,h4,h5,h6,#header nav ul.menu>li>a,#header nav ul.sub-menu li a,div.meta,div.tags,aside .widget,#footer .widget,.epcl-button,.button{font-family:'Vazirmatn',Tahoma,sans-serif!important}
+/* Horizontal scroll: never. clip (not hidden) keeps position:sticky working. */
+html,body{overflow-x:clip}
 /* Typography scale (Persian standard: generous line-height, clamp() for fluid type) */
-body{font-size:16px;line-height:1.9}
+body{font-size:16px;line-height:1.9;color:#242323}
 .post-content p,.post-excerpt p{line-height:1.9}
-h1.main-title,.post-title{font-size:clamp(23px,5vw,31px);line-height:1.6}
-.post-content h2{font-size:clamp(20px,4vw,25px);line-height:1.7}
-.post-content h3{font-size:clamp(18px,3.5vw,21px);line-height:1.7}
-.post-content h4{font-size:clamp(16px,3vw,19px);line-height:1.7}
-.post-excerpt{font-size:15px;line-height:1.9}
+/* Headings are BOLD, not just bigger — the weight carries the hierarchy. */
+h1.main-title,.post-title{font-size:clamp(23px,5vw,31px);line-height:1.6;font-weight:800;color:#242323}
+.post-content h2{font-size:clamp(20px,4vw,25px);line-height:1.7;font-weight:700;color:#242323}
+.post-content h3{font-size:clamp(18px,3.5vw,21px);line-height:1.7;font-weight:700;color:#242323}
+.post-content h4{font-size:clamp(16px,3vw,19px);line-height:1.7;font-weight:700;color:#242323}
+#header .logo a,.published .logo a{font-weight:800}
+.widget-title{font-weight:700!important}
+.epcl-button,.button,.wpcf7-submit{font-weight:700}
+.post-excerpt{font-size:15px;line-height:1.9;color:#374151}
+.post-excerpt p{color:#374151}
 .meta,.min-read,.views-counter{font-size:13px}
 /* Responsive / overflow guards — no horizontal scroll on mobile */
 .post-content img,.featured-image img,.fullwidth,.post-format-image img{max-width:100%!important;height:auto!important}
@@ -34,6 +41,95 @@ pre[class*="brush:"]{direction:ltr!important;text-align:left!important;backgroun
 .post-content pre{max-width:100%}
 .search-results article{margin-bottom:18px}
 .search-results .result-title{font-size:18px}
+/* ---- Category chips: real pills with gaps, never jammed together ---- */
+div.tags .ctag{display:inline-block;padding:3px 12px;margin:0 0 6px 6px;border-radius:20px;color:#fff!important;font-size:12.5px;font-weight:600;line-height:1.8;white-space:nowrap}
+div.tags .ctag:hover{color:#fff;opacity:.85}
+/* ---- Clean cards: image on top, content below ---- */
+article.card-clean{background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(7,10,25,.06);margin-bottom:36px}
+article.card-clean .card-thumb{display:block;position:relative;overflow:hidden}
+article.card-clean .card-thumb .fullimage{display:block;width:100%;aspect-ratio:16/9;background-size:cover;background-position:center;transition:transform .5s ease}
+article.card-clean:hover .card-thumb .fullimage{transform:scale(1.03)}
+article.card-clean .card-body{padding:22px 26px 24px}
+article.card-clean .tags{position:static;margin-bottom:10px}
+article.card-clean .post-title{font-size:clamp(21px,3.4vw,27px);font-weight:800;line-height:1.65;margin:0 0 10px}
+article.card-clean .post-title a{color:#242323}
+article.card-clean .post-title a:hover{color:#FF486A}
+article.card-clean .post-excerpt{margin-bottom:16px}
+article.card-clean .post-excerpt p{margin:0}
+article.card-clean .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding-top:14px;border-top:1px solid #f0f0f0;color:#596172}
+article.card-clean .meta .author{display:inline-flex;align-items:center;gap:8px}
+article.card-clean .meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;flex:none}
+article.card-clean .meta .author-name{font-weight:600;color:#242323}
+article.card-clean .meta svg{width:15px;height:15px;fill:#FF486A;vertical-align:-2px;margin-inline-end:3px}
+article.card-clean .continue-reading{display:inline-block;margin-top:16px;color:#FF486A;font-weight:700;font-size:15px}
+article.card-clean .continue-reading:hover{color:#e03a5c}
+/* grid (archive) cards: same language, tighter */
+.articles.grid-posts article.card-clean .card-body{padding:18px 20px}
+.articles.grid-posts article.card-clean .post-title{font-size:19px;line-height:1.7}
+.articles.grid-posts article.card-clean .post-excerpt{font-size:14px}
+.articles.grid-posts article.card-clean .meta{font-size:12px;gap:4px 12px}
+/* ---- Post page: meta pill labels, author box, related/siblings ---- */
+div.meta.absolute .meta-info{font-size:13px}
+#author .flex{display:flex;gap:20px;align-items:flex-start}
+#author .avatar{flex:none}
+#author .avatar a.thumb{display:block;position:relative;width:110px;height:110px;border-radius:50%;overflow:hidden}
+#author .avatar .fullimage{position:absolute;inset:0;background-size:cover;background-position:center}
+#author .info{flex:1;min-width:0}
+#author .info h4{margin:0 0 4px}
+#author .info .position{margin:0 0 8px}
+#author .info p{margin:0 0 14px}
+#author .info .button{margin-top:4px}
+/* post meta author avatar (30px disc) */
+div.meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;vertical-align:middle;margin-inline-end:6px}
+section.related article .thumb,section.siblings article .thumb{position:relative;display:block;overflow:hidden;border-radius:8px}
+section.related article .thumb img{display:block;width:100%;height:200px;object-fit:cover}
+section.siblings article{min-height:220px}
+section.siblings article .thumb{position:absolute;inset:0;border-radius:8px}
+section.siblings article .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+section.siblings article .info{z-index:3}
+section.siblings article::after{content:"";position:absolute;inset:0;border-radius:8px;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0) 60%);z-index:2;pointer-events:none}
+section.siblings article .info .title a,section.siblings article .info .meta{color:#fff}
+.no-comments-note{color:#596172;text-align:center;padding:18px 0}
+.static-comments-note{font-size:13px;color:#9aa0a6;text-align:center;margin-top:18px}
+/* permalink copy button: visible dark icon on the grey bar */
+.permalink .copy svg{fill:#242323}
+.permalink .copy:hover svg{fill:#FF486A}
+/* ---- Numbered pagination ---- */
+.epcl-pagination div.nav a.post-page-numbers,.epcl-pagination div.nav span.post-page-numbers{display:inline-block;min-width:36px;height:36px;line-height:36px;padding:0 12px;margin:0 4px;border-radius:18px;font-size:14px;font-weight:600;text-align:center}
+.epcl-pagination div.nav span.current{background:#FF486A;color:#fff;cursor:default}
+.epcl-pagination div.nav a.post-page-numbers{background:#f5f5f5;color:#242323}
+.epcl-pagination div.nav a.post-page-numbers:hover{background:#FF486A;color:#fff}
+/* ---- Footer: consistent alignment + real bottom bar ---- */
+#footer .widget_tag_cloud ul li{display:block;text-align:right;margin:0}
+#footer .widget_tag_cloud ul li a{display:block;padding:8px 0;color:#596172;border-bottom:1px solid #f0f0f0}
+#footer .widget_tag_cloud ul li a:hover{color:#FF486A}
+#footer .widget .about p{color:#596172}
+#footer .published{padding-bottom:10px}
+#footer .bottom-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 26px;border-top:1px solid #eee}
+#footer .bottom-bar .copyright{margin:0;font-size:13.5px;color:#596172}
+#footer .bottom-bar .epcl-social-buttons{margin:0}
+/* ---- Sidebar widgets ---- */
+.widget_epcl_posts_thumbs .item{position:relative;padding-right:100px;min-height:80px;margin-bottom:20px}
+.widget_epcl_posts_thumbs .item .thumb{position:absolute;right:0;top:0;width:80px;height:80px;border-radius:8px;background-size:cover;background-position:center}
+.widget_epcl_posts_thumbs .item .title{font-size:15px;font-weight:600;line-height:1.7;margin:0 0 4px}
+.widget_epcl_posts_thumbs .item time{font-size:12.5px;color:#9aa0a6}
+.widget_recent_comments li a{display:block;font-size:14px;line-height:1.7}
+.widget_recent_comments li .comment-author{font-weight:600}
+/* ---- Donate page: copyable wallet + unbreakable email ---- */
+.wallet-wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:10px 0}
+.wallet-address{display:inline-block;direction:ltr;background:#f6f8fa;border:1px solid #e5e7eb;border-radius:6px;padding:8px 12px;font-size:13px;overflow-wrap:anywhere;max-width:100%}
+.copy-address{flex:none}
+.email-inline{white-space:nowrap}
+/* ---- Contact form: saner field heights ---- */
+.wpcf7-form input[type=text],.wpcf7-form input[type=email]{height:48px}
+.wpcf7-form textarea{min-height:150px}
+/* ---- Sticky header: keep the search button available while scrolled ---- */
+#header.is-sticky div.menu-wrapper .epcl-search-button{display:inline-flex!important;position:static;top:auto;right:auto;align-self:center;margin-inline-start:12px}
+/* ---- Mobile drawer: the theme's fixed side panel (left), RTL text ---- */
+nav.mobile.main-nav{background:#fff;text-align:right;direction:rtl}
+nav.mobile.main-nav ul.menu>li>a{font-weight:600}
+nav.mobile.main-nav ul.menu li.menu-item-has-children.open>ul.sub-menu{opacity:1;visibility:visible;max-height:50vh!important;overflow:auto;padding:5px 0 0}
+nav.mobile.main-nav ul.menu li.menu-item-has-children.open:after{color:#FF486A}
 @media (max-width:767px){
   body{font-size:16px;line-height:1.9}
   h1.main-title,.post-title{font-size:23px}
@@ -43,6 +139,13 @@ pre[class*="brush:"]{direction:ltr!important;text-align:left!important;backgroun
      article text sat in a 70%-wide column (~245px on a 390px phone) and lines
      broke early with 30% empty space beside them. Full width on mobile. */
   .grid-70,.grid-30{width:100%!important;float:none!important}
-  #header nav.main-nav{display:none}
-  body.menu-open #header nav.main-nav{display:block}
+  /* Desktop nav only: the mobile drawer (nav.mobile.main-nav) is a separate
+     fixed panel handled by the theme CSS — never display:block it in flow. */
+  #header nav.main-nav:not(.mobile){display:none}
+  article.card-clean .card-body{padding:18px 18px 20px}
+  article.card-clean .meta{gap:4px 12px}
+  #author .flex{flex-direction:column;align-items:center;text-align:center}
+  #author .info{text-align:center}
+  #footer .bottom-bar{justify-content:center;text-align:center}
+  .widget_epcl_posts_thumbs .item{padding-right:96px}
 }
