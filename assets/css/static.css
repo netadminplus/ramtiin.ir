@@ -1,292 +1,387 @@
 /* ============================================================
-   DESIGN SYSTEM — ramtiin.ir
-   One set of tokens, one component per pattern. Rules are written
-   to beat the Veen theme where it fights the system (see notes).
-   Contrast targets: text 4.5:1 (AA), UI fills with white text 4.5:1.
+   DESIGN SYSTEM — ramtiin.ir (Figma Make redesign, 2026-11-21)
+   Ported from the Figma Make output (Persian_Tech_Blog_Redesign.zip):
+   tokens, header/drawer/search, intro, cards, pagination, footer,
+   category hero, article, about, contact. The theme CSS files
+   (style.min.css, rtl.css, customizer.css, font-awesome, sh) are NOT
+   loaded anymore — this file is the entire design system.
+   Vazirmatn is self-hosted (Google Fonts is unreliable from Iran).
    ============================================================ */
-:root{
-  --brand:#FF486A;          /* theme brand pink — accents & large fills only */
-  --brand-strong:#D61F4A;   /* small fills & text — white on it is 5.2:1 */
-  --brand-text:#BE123C;     /* text on tint — ~6:1 */
-  --brand-tint:#FFF1F2;
-  --brand-tint-2:#FFE4E6;
-  --brand-border:#FECDD3;
-  --accent2:#7169FE;        /* theme secondary purple — large fills only */
-  --accent2-strong:#4F46E5; /* small fills & text — white on it is 5.6:1 */
-  --ink:#1F2937;            /* headings */
-  --body:#374151;           /* body text — 9:1 on white */
-  --muted:#6B7280;          /* secondary text — 4.8:1 on white */
-  --faint:#9CA3AF;          /* captions only, never body text */
-  --line:#E5E7EB;
-  --line-strong:#D1D5DB;
-  --surface:#FFFFFF;
-  --surface-2:#F9FAFB;
-  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-pill:999px;
-  --shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.10);
-  --shadow-md:0 4px 8px -2px rgba(16,24,40,.10),0 2px 4px -2px rgba(16,24,40,.06);
-}
-/* Vazirmatn — free, standard Persian web font, self-hosted (variable weight) */
 @font-face{font-family:'Vazirmatn';src:url('../fonts/Vazirmatn-Variable.woff2') format('woff2-variations');font-weight:100 900;font-style:normal;font-display:swap}
-body,button,input,select,textarea,.title,h1,h2,h3,h4,h5,h6,#header nav ul.menu>li>a,#header nav ul.sub-menu li a,div.meta,div.tags,aside .widget,#footer .widget,.epcl-button,.button{font-family:'Vazirmatn',Tahoma,sans-serif!important}
-/* Horizontal scroll: never. clip (not hidden) keeps position:sticky working. */
+
+:root {
+  --ink: #17202a;
+  --muted: #66717e;
+  --accent: #f54868;
+  --accent-dark: #d92f51;
+  --paper: #fff;
+  --soft: #f5f7f8;
+  --line: #e5e9ec;
+  --navy: #131c25;
+  --shell: 1180px;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { direction: rtl; margin: 0; background: var(--paper); color: var(--ink); font-family: 'Vazirmatn', sans-serif; font-size: 16px; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  button, input, textarea, select { font-family: inherit; }
+  button { cursor: pointer; }
+  img { max-width: 100%; display: block; }
+}
+
+.shell { width: min(var(--shell), calc(100% - 48px)); margin-inline: auto; }
+.topline { background: var(--navy); color: #c8cfd5; font-size: 12px; }
+.topline-inner { height: 36px; display: flex; align-items: center; justify-content: space-between; }
+.socials { display: flex; gap: 8px; align-items: center; }
+.socials a { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid #34404b; color: white; transition: .2s; }
+.socials a:hover { background: var(--accent); border-color: var(--accent); }
+.socials-muted a { width: 26px; height: 26px; border: 0; color: #aab3bb; }
+.socials-muted svg { width: 16px; }
+.site-header { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(10px); }
+.header-inner { height: 78px; display: flex; align-items: center; }
+.brand { font-size: 29px; line-height: 1; font-weight: 800; letter-spacing: -.8px; }
+.brand span { color: var(--accent); }
+.desktop-nav { display: flex; align-items: center; gap: 29px; margin-right: 70px; font-size: 14px; font-weight: 600; }
+.desktop-nav a { position: relative; padding: 28px 0; }
+.desktop-nav a::after { content: ''; position: absolute; right: 0; left: 100%; bottom: 18px; height: 2px; background: var(--accent); transition: .2s; }
+.desktop-nav a:hover::after { left: 0; }
+.header-actions { margin-right: auto; display: flex; gap: 8px; }
+.icon-button { border: 0; background: transparent; padding: 0; width: 40px; height: 40px; display: grid; place-items: center; color: var(--ink); }
+.icon-button:hover { color: var(--accent); }
+.menu-button { display: none; }
+.overlay { position: fixed; inset: 0; background: rgba(11,17,23,.52); z-index: 50; opacity: 0; pointer-events: none; transition: opacity .25s; }
+.overlay.is-open { opacity: 1; pointer-events: auto; }
+.drawer { position: fixed; top: 0; right: 0; z-index: 60; width: min(360px, 88vw); height: 100dvh; background: white; padding: 24px 28px; transform: translateX(105%); transition: transform .3s ease; display: flex; flex-direction: column; }
+.drawer.is-open { transform: none; }
+.drawer-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 25px; border-bottom: 1px solid var(--line); }
+.drawer-nav { display: flex; flex-direction: column; padding: 25px 0; }
+.drawer-nav a { padding: 12px 0; border-bottom: 1px solid #eef0f2; font-weight: 600; }
+.drawer-foot { margin-top: auto; color: var(--muted); font-size: 14px; }
+.drawer-foot .socials { margin-top: 16px; }
+.drawer-foot .socials a { color: var(--ink); border-color: var(--line); }
+.search-modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: start center; padding-top: 13vh; }
+.search-backdrop { position: absolute; inset: 0; background: rgba(12,18,24,.86); border: 0; width: 100%; height: 100%; }
+.search-panel { position: relative; z-index: 1; width: min(680px, calc(100% - 32px)); background: white; padding: 45px; }
+.search-panel label { display: block; font-weight: 700; font-size: 23px; margin-bottom: 22px; }
+.search-close { position: absolute; left: 12px; top: 12px; }
+.search-field { display: flex; border-bottom: 2px solid var(--ink); }
+.search-field input { border: 0; outline: 0; flex: 1; min-width: 0; padding: 14px 2px; font-size: 17px; }
+.search-field button { width: 50px; border: 0; background: transparent; display: grid; place-items: center; }
+.search-panel p { color: var(--muted); font-size: 13px; margin: 14px 0 0; }
+.intro-strip { border-bottom: 1px solid var(--line); background: linear-gradient(90deg,#fff 0%,#fff 55%,#f8f9fa 55%); }
+.intro-inner { min-height: 270px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 90px; align-items: center; }
+.eyebrow { display: block; color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .04em; margin-bottom: 10px; }
+.intro-inner h1 { font-size: clamp(35px, 4vw, 54px); line-height: 1.35; letter-spacing: -1.8px; margin: 0; font-weight: 800; }
+.intro-inner h1 strong { color: var(--accent); }
+.intro-inner p { color: #4d5965; font-size: 17px; line-height: 2.05; margin: 0; padding-right: 35px; border-right: 2px solid var(--accent); }
+.listing-section { padding-block: 75px 90px; }
+.section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 34px; }
+.section-heading h2 { margin: 0; font-size: 31px; line-height: 1.3; letter-spacing: -.7px; }
+.section-heading > a, .bio-copy > a { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
+.section-heading > a:hover, .bio-copy > a:hover { color: var(--accent); border-color: var(--accent); }
+.post-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+.post-card { border: 1px solid var(--line); background: white; min-width: 0; display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s; }
+.post-card:hover { transform: translateY(-4px); box-shadow: 0 18px 45px rgba(25,37,48,.08); }
+.card-image { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: #e9ecef; }
+.card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.post-card:hover .card-image img { transform: scale(1.035); }
+.image-arrow { position: absolute; left: 0; bottom: 0; width: 42px; height: 42px; display: grid; place-items: center; color: white; background: var(--accent); transform: translateY(100%); transition: .2s; }
+.post-card:hover .image-arrow { transform: none; }
+.card-body { padding: 22px 23px 21px; display: flex; flex: 1; flex-direction: column; align-items: flex-start; }
+.chip { display: inline-flex; align-items: center; min-height: 25px; padding: 3px 10px; color: var(--accent-dark); background: #fff0f3; font-size: 11px; font-weight: 800; border-radius: 2px; }
+.card-body h3 { font-size: 18px; line-height: 1.75; margin: 12px 0 8px; font-weight: 750; }
+.card-body h3 a:hover { color: var(--accent); }
+.excerpt { color: var(--muted); font-size: 14px; line-height: 1.85; margin: 0 0 19px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-meta { width: 100%; display: flex; align-items: center; gap: 14px; padding-top: 14px; border-top: 1px solid #edf0f2; color: #7b858f; font-size: 11.5px; margin-top: auto; }
+.card-meta span { display: flex; align-items: center; gap: 5px; }
+.read-more { display: flex; align-items: center; gap: 8px; margin-top: 17px; color: var(--ink); font-size: 13px; font-weight: 700; }
+.read-more svg { color: var(--accent); transition: .2s; }
+.read-more:hover { color: var(--accent); }
+.read-more:hover svg { transform: translateX(-4px); }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 55px; direction: rtl; }
+.pagination a, .pagination > span { width: 39px; height: 39px; display: grid; place-items: center; border: 1px solid var(--line); font-size: 13px; }
+.pagination .active { color: white; background: var(--accent); border-color: var(--accent); }
+.pagination a:hover { border-color: var(--ink); }
+.pagination .next { width: auto; padding-inline: 15px; display: flex; gap: 7px; }
+footer { background: var(--navy); color: #aeb7bf; padding-top: 70px; }
+.footer-grid { display: grid; grid-template-columns: 1.45fr .7fr .7fr 1.15fr; gap: 70px; padding-bottom: 55px; }
+.brand-light { color: white; display: inline-block; margin-bottom: 22px; }
+.footer-grid section { display: flex; flex-direction: column; align-items: flex-start; }
+.footer-grid h3 { color: white; font-size: 15px; margin: 5px 0 22px; }
+.footer-grid p { font-size: 13px; line-height: 2; margin: 0 0 20px; }
+.footer-grid section > a:not(.brand) { font-size: 13px; padding: 4px 0; }
+.footer-grid section > a:hover { color: white; }
+.footer-about .socials { margin-top: 8px; }
+.newsletter { height: 46px; display: flex; width: 100%; border: 1px solid #39434c; }
+.newsletter input { flex: 1; width: 100%; min-width: 0; background: transparent; border: 0; outline: 0; color: white; padding: 0 13px; font-size: 12px; }
+.newsletter button { width: 46px; display: grid; place-items: center; background: var(--accent); color: white; border: 0; }
+.footer-bottom { min-height: 70px; border-top: 1px solid #2a343d; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; }
+.footer-bottom p { margin: 0; }
+.page-hero { background: var(--soft); border-bottom: 1px solid var(--line); }
+.category-hero .shell { position: relative; padding-block: 54px 64px; }
+.breadcrumbs { display: flex; gap: 9px; align-items: center; color: #88919a; font-size: 11px; margin-bottom: 35px; }
+.breadcrumbs a:hover { color: var(--accent); }
+.category-hero h1 { font-size: 45px; margin: 0 0 12px; line-height: 1.3; }
+.category-hero p { max-width: 700px; font-size: 16px; color: var(--muted); line-height: 2; margin: 0; }
+.category-count { position: absolute; left: 0; bottom: 66px; text-align: center; padding-right: 28px; border-right: 1px solid #d9dde0; }
+.category-count strong { display: block; font-size: 34px; line-height: 1; }
+.category-count span { font-size: 11px; color: var(--muted); }
+.category-listing { padding-top: 60px; }
+.section-heading.compact { margin-bottom: 28px; }
+.section-heading.compact h2 { font-size: 23px; }
+.section-heading.compact p { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+.article-head { text-align: center; padding-top: 50px; }
+.article-width { max-width: 900px; }
+.article-head .breadcrumbs { justify-content: center; margin-bottom: 28px; }
+.article-head h1 { font-size: clamp(31px, 4.1vw, 49px); line-height: 1.55; letter-spacing: -1.4px; margin: 16px auto 14px; }
+.article-lead { max-width: 720px; color: var(--muted); font-size: 17px; margin: 0 auto 28px; }
+.article-meta { border-top: 1px solid var(--line); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; text-align: right; }
+.author-mini { display: flex; align-items: center; gap: 12px; }
+.author-mini img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; }
+.author-mini span { display: flex; flex-direction: column; }
+.author-mini strong { font-size: 13px; }
+.author-mini small { color: var(--muted); font-size: 10px; }
+.article-meta > div:last-child { display: flex; gap: 24px; color: var(--muted); font-size: 12px; }
+.article-meta > div:last-child span { display: flex; align-items: center; gap: 6px; }
+.featured { margin-top: 42px; max-width: 1100px; }
+.featured img { width: 100%; aspect-ratio: 16 / 8.2; object-fit: cover; }
+.featured figcaption { color: #89919a; font-size: 10px; margin-top: 7px; text-align: center; }
+.article-layout { max-width: 1040px; display: grid; grid-template-columns: 180px minmax(0, 720px); gap: 65px; justify-content: center; padding-block: 50px 85px; direction: ltr; }
+.toc { direction: rtl; align-self: start; position: sticky; top: 110px; border-right: 2px solid var(--line); display: flex; flex-direction: column; }
+.toc span { padding: 0 15px 10px; font-size: 12px; font-weight: 800; }
+.toc a { padding: 6px 15px; color: #7a848e; font-size: 11px; border-right: 2px solid transparent; margin-right: -2px; }
+.toc a:hover { color: var(--accent); border-color: var(--accent); }
+.article-content { direction: rtl; font-size: 17px; line-height: 2.15; }
+.article-content > p { color: #3e4954; margin: 0 0 25px; }
+.article-content h2 { font-size: 27px; line-height: 1.6; margin: 50px 0 16px; scroll-margin-top: 110px; }
+.article-content h3 { font-size: 21px; margin: 36px 0 10px; }
+.article-content blockquote { margin: 34px 0; padding: 24px 28px 24px 22px; border-right: 3px solid var(--accent); background: #fff5f7; color: #3e4852; font-weight: 500; }
+.article-content ul, .article-content ol { padding-right: 24px; color: #3e4954; }
+.article-content li { padding-right: 7px; margin: 4px 0; }
+.article-content li::marker { color: var(--accent); font-weight: 700; }
+.table-wrap { width: 100%; overflow-x: auto; margin: 25px 0 35px; border: 1px solid var(--line); }
+.article-content table { border-collapse: collapse; width: 100%; min-width: 670px; font-size: 13px; }
+.article-content th, .article-content td { text-align: right; padding: 13px 15px; border-bottom: 1px solid var(--line); }
+.article-content th { background: var(--navy); color: white; }
+.article-content tr:nth-child(even) td { background: #f7f8f9; }
+.article-content pre { direction: ltr; text-align: left; background: #17212a; color: #d8e2e9; padding: 23px 25px; overflow-x: auto; font: 14px/1.8 ui-monospace, SFMono-Regular, Menlo, monospace; border-right: 3px solid var(--accent); }
+.article-note { display: flex; gap: 14px; align-items: flex-start; background: var(--soft); border: 1px solid var(--line); padding: 20px 22px; margin-top: 35px; }
+.article-note svg { color: var(--accent); flex: 0 0 auto; margin-top: 6px; }
+.article-note p { margin: 0; font-size: 15px; line-height: 1.9; }
+.author-box { margin-top: 65px; padding: 28px; background: var(--navy); color: white; display: grid; grid-template-columns: 110px 1fr; gap: 26px; }
+.author-box img { width: 110px; height: 135px; object-fit: cover; }
+.author-box .eyebrow { margin-bottom: 2px; }
+.author-box h3 { font-size: 20px; margin: 0 0 6px; }
+.author-box p { color: #bdc5cb; font-size: 13px; line-height: 1.9; margin: 0 0 10px; }
+.author-box a { display: inline-flex; align-items: center; gap: 7px; color: white; font-size: 12px; border-bottom: 1px solid #4c555e; }
+.comments { margin-top: 65px; }
+.comments h2 { margin: 0; }
+.comments h2 small { font-size: 13px; color: var(--muted); }
+.empty-comments { margin-top: 20px; padding: 38px; border: 1px solid var(--line); text-align: center; }
+.empty-comments svg { color: #a2aab1; margin: 0 auto 10px; }
+.empty-comments p { margin: 0; font-weight: 700; }
+.empty-comments span { display: block; color: var(--muted); font-size: 12px; }
+.empty-comments button { background: transparent; border: 1px solid var(--ink); padding: 8px 16px; margin-top: 16px; font-size: 12px; font-weight: 700; }
+.empty-comments button:hover { background: var(--ink); color: white; }
+.related-section { background: var(--soft); border-top: 1px solid var(--line); padding: 65px 0 80px; }
+.related-grid .card-body { padding-bottom: 18px; }
+.about-hero { padding-block: 55px 70px; }
+.about-hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; align-items: center; gap: 100px; }
+.about-hero .breadcrumbs { margin-bottom: 50px; }
+.about-hero h1 { font-size: clamp(37px, 4.5vw, 56px); line-height: 1.55; letter-spacing: -2px; margin: 4px 0 19px; }
+.about-hero h1 strong { color: var(--accent); }
+.about-hero p { color: var(--muted); max-width: 620px; font-size: 17px; line-height: 2.1; }
+.primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 11px; background: var(--accent); color: white; border: 0; min-height: 48px; padding: 0 22px; font-size: 13px; font-weight: 700; }
+.primary-button:hover { background: var(--accent-dark); }
+.about-hero .primary-button { margin-top: 14px; }
+.about-hero figure { position: relative; margin: 25px 0 0; }
+.portrait-frame { position: relative; padding: 0 20px 20px 0; }
+.portrait-frame::before { content: ''; position: absolute; right: 0; bottom: 0; width: 72%; height: 72%; border: 2px solid var(--accent); }
+.portrait-frame img { position: relative; width: 100%; aspect-ratio: .82; object-fit: cover; filter: saturate(.85); }
+.about-hero figcaption { position: absolute; left: -30px; bottom: 50px; background: var(--navy); color: white; padding: 17px 22px; min-width: 125px; }
+.about-hero figcaption strong, .about-hero figcaption span { display: block; }
+.about-hero figcaption strong { font-size: 23px; }
+.about-hero figcaption span { color: #b6bec5; font-size: 10px; }
+.bio-section { display: grid; grid-template-columns: .8fr 1.2fr; gap: 100px; padding-block: 90px; max-width: 1040px; }
+.bio-title h2 { font-size: 38px; line-height: 1.55; margin: 0; }
+.bio-copy p { color: var(--muted); font-size: 15px; line-height: 2.1; }
+.bio-copy .lead { color: var(--ink); font-size: 18px; }
+.bio-copy > a { width: max-content; margin-top: 25px; }
+.services { background: var(--soft); border-block: 1px solid var(--line); padding-block: 75px 85px; }
+.service-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--line); }
+.service-grid > div { background: white; padding: 35px; min-height: 220px; border-left: 1px solid var(--line); }
+.service-grid > div:last-child { border-left: 0; }
+.service-grid > div > span { color: var(--accent); font-size: 12px; font-weight: 800; }
+.service-grid h3 { font-size: 20px; margin: 24px 0 9px; }
+.service-grid p { color: var(--muted); font-size: 13px; line-height: 2; margin: 0; }
+.contact-section { display: grid; grid-template-columns: .85fr 1.15fr; gap: 90px; padding-block: 90px 100px; }
+.contact-info h2 { font-size: 33px; line-height: 1.6; margin: 0 0 14px; }
+.contact-info > p { color: var(--muted); font-size: 14px; }
+.contact-info > a { display: flex; align-items: center; gap: 13px; margin-top: 30px; }
+.contact-info > a > span { width: 43px; height: 43px; display: grid; place-items: center; border: 1px solid var(--line); color: var(--accent); }
+.contact-info > a div { display: flex; flex-direction: column; }
+.contact-info small { color: var(--muted); font-size: 10px; }
+.contact-info b { font-size: 13px; }
+.contact-social { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); }
+.contact-social .socials { margin-top: 9px; }
+.contact-social .socials a { color: var(--ink); border-color: var(--line); }
+.contact-form { border: 1px solid var(--line); padding: 35px; background: white; min-height: 480px; }
+.contact-form label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 20px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.contact-form input, .contact-form select, .contact-form textarea { display: block; width: 100%; margin-top: 7px; border: 1px solid #dfe3e6; background: #fafbfb; padding: 11px 13px; outline: none; font-size: 13px; resize: vertical; }
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { border-color: var(--accent); background: white; }
+.contact-form .primary-button { float: left; min-width: 140px; }
+.success-message { height: 405px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.success-message > span { width: 58px; height: 58px; border-radius: 50%; background: #eaf7ef; color: #238953; display: grid; place-items: center; }
+.success-message h3 { margin: 18px 0 3px; }
+.success-message p { color: var(--muted); font-size: 13px; }
+.success-message button { border: 0; border-bottom: 1px solid var(--ink); background: transparent; padding: 5px; font-size: 12px; }
+
+@media (max-width: 960px) {
+  .desktop-nav { gap: 18px; margin-right: 35px; }
+  .desktop-nav a:nth-child(3), .desktop-nav a:nth-child(4) { display: none; }
+  .post-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 45px; }
+  .footer-grid section:last-child { grid-column: 1 / -1; }
+  .article-layout { grid-template-columns: 150px minmax(0, 1fr); gap: 35px; }
+  .about-hero-grid { gap: 55px; }
+  .contact-section { gap: 45px; }
+}
+
+@media (max-width: 720px) {
+  .shell { width: min(100% - 32px, var(--shell)); }
+  .topline { display: none; }
+  .site-header { top: 0; }
+  .header-inner { height: 68px; }
+  .desktop-nav { display: none; }
+  .menu-button { display: grid; }
+  .search-button { border-left: 1px solid var(--line); }
+  .brand { font-size: 27px; }
+  .intro-strip { background: var(--soft); }
+  .intro-inner { display: block; padding-block: 48px; min-height: 0; }
+  .intro-inner h1 { font-size: 35px; }
+  .intro-inner p { margin-top: 25px; padding-right: 18px; font-size: 15px; }
+  .listing-section { padding-block: 52px 65px; }
+  .section-heading { align-items: center; margin-bottom: 25px; }
+  .section-heading h2 { font-size: 25px; }
+  .section-heading > a { font-size: 0; border: 0; }
+  .section-heading > a svg { width: 22px; }
+  .post-grid { grid-template-columns: 1fr; gap: 22px; }
+  .card-body h3 { font-size: 17px; }
+  .pagination { margin-top: 38px; }
+  .pagination a, .pagination > span { width: 35px; height: 35px; }
+  .pagination .next { font-size: 0; padding: 0; width: 35px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 38px 25px; padding-bottom: 45px; }
+  .footer-about, .footer-grid section:last-child { grid-column: 1 / -1; }
+  .footer-bottom { padding-block: 20px; flex-direction: column; gap: 3px; text-align: center; }
+  .category-hero .shell { padding-block: 34px 45px; }
+  .breadcrumbs { margin-bottom: 25px; }
+  .category-hero h1 { font-size: 34px; }
+  .category-hero p { font-size: 14px; padding-left: 0; }
+  .category-count { position: static; border: 0; border-top: 1px solid var(--line); padding: 18px 0 0; margin-top: 25px; text-align: right; display: flex; align-items: center; gap: 8px; }
+  .category-count strong { font-size: 23px; }
+  .article-head { padding-top: 35px; }
+  .article-head h1 { font-size: 29px; line-height: 1.65; }
+  .article-lead { font-size: 15px; }
+  .article-meta { align-items: flex-start; gap: 14px; }
+  .article-meta > div:last-child { flex-direction: column; gap: 2px; text-align: left; }
+  .featured { width: 100%; margin-top: 30px; }
+  .featured figcaption { padding-inline: 16px; }
+  .article-layout { display: block; padding-block: 32px 65px; }
+  .toc { display: none; }
+  .article-content { font-size: 16px; line-height: 2.05; }
+  .article-content h2 { font-size: 23px; margin-top: 40px; }
+  .article-content blockquote { margin-inline: 0; }
+  .author-box { grid-template-columns: 75px 1fr; gap: 18px; padding: 22px; }
+  .author-box img { width: 75px; height: 90px; }
+  .author-box p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .related-grid .post-card:nth-child(3) { display: none; }
+  .about-hero { padding-block: 34px 55px; }
+  .about-hero-grid { grid-template-columns: 1fr; gap: 45px; }
+  .about-hero .breadcrumbs { margin-bottom: 34px; }
+  .about-hero h1 { font-size: 35px; }
+  .about-hero p { font-size: 15px; }
+  .about-hero figure { width: 80%; margin-inline: auto; }
+  .about-hero figcaption { left: -20px; }
+  .bio-section { grid-template-columns: 1fr; gap: 30px; padding-block: 60px; }
+  .bio-title h2 { font-size: 30px; }
+  .service-grid { grid-template-columns: 1fr; }
+  .service-grid > div { border-left: 0; border-bottom: 1px solid var(--line); min-height: 0; }
+  .contact-section { grid-template-columns: 1fr; gap: 40px; padding-block: 60px 70px; }
+  .contact-info h2 { font-size: 28px; }
+  .contact-form { padding: 24px; }
+  .field-row { grid-template-columns: 1fr; gap: 0; }
+}
+
+@media (max-width: 390px) {
+  .article-meta { flex-direction: column; }
+  .article-meta > div:last-child { flex-direction: row; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-grid section { grid-column: 1 !important; }
+  .about-hero figure { width: 92%; }
+}
+
+/* ---------- Port additions: static-site necessities ----------
+   (appended to the Figma CSS; unlayered, so these beat Figma's
+   @layer base rules where they overlap.) */
+:focus-visible{outline:2px solid var(--accent-dark);outline-offset:2px;border-radius:4px}
 html,body{overflow-x:clip}
-/* Accessible keyboard focus, everywhere. */
-:focus-visible{outline:2px solid var(--brand-strong);outline-offset:2px;border-radius:4px}
-/* ---------- Type scale ---------- */
-body{font-size:16px;line-height:1.9;color:var(--body)}
-.post-content p,.post-excerpt p{line-height:1.9}
-/* Headings are BOLD, not just bigger — the weight carries the hierarchy. */
-h1.main-title,.post-title{font-size:clamp(23px,5vw,31px);line-height:1.6;font-weight:800;color:var(--ink)}
-.post-content h2{font-size:clamp(20px,4vw,25px);line-height:1.7;font-weight:700;color:var(--ink)}
-.post-content h3{font-size:clamp(18px,3.5vw,21px);line-height:1.7;font-weight:700;color:var(--ink)}
-.post-content h4{font-size:clamp(16px,3vw,19px);line-height:1.7;font-weight:700;color:var(--ink)}
-/* CONTENT RULE: no heading colour may come from WordPress inline styles
-   (the old #00ccff blue headings) — the design system owns heading
-   colour. Inline styles beat the rules above, so this needs !important. */
-.post-content h1,.post-content h2,.post-content h3,.post-content h4{color:var(--ink)!important}
-#header .logo a,.published .logo a{font-weight:800}
-.widget-title{font-weight:700!important}
-.post-excerpt{font-size:15px;line-height:1.9;color:var(--body)}
-.post-excerpt p{color:var(--body)}
-.meta,.min-read,.views-counter{font-size:13px;color:var(--muted)}
-/* ---------- Buttons: one primary, one secondary, one ghost ---------- */
-.epcl-button:not(.circle),.button:not(.circle),.wpcf7-submit{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:var(--r-md);font-weight:700;font-size:15px;line-height:1.4;background:var(--brand-strong);color:#fff;border:1px solid var(--brand-strong);box-shadow:none;cursor:pointer}
-.epcl-button:not(.circle):hover,.button:not(.circle):hover,.wpcf7-submit:hover{background:#B91C42;border-color:#B91C42;color:#fff;box-shadow:var(--shadow-sm)}
-.epcl-button.secondary,.button.secondary{background:var(--accent2-strong);border-color:var(--accent2-strong)}
-.epcl-button.secondary:hover,.button.secondary:hover{background:#4338CA;border-color:#4338CA}
-#show-comments{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:var(--r-md);font-weight:700;font-size:15px;background:var(--brand-strong);color:#fff;border:1px solid var(--brand-strong);cursor:pointer}
-/* ---------- Chip: ONE component for every category, everywhere ----------
-   No per-category background colours: 7 arbitrary colours failed contrast
-   with any text colour (white on yellow, dark on pink). One tinted pill,
-   dark-rose text on a pink tint — readable on every surface. */
-div.tags{display:flex;flex-wrap:wrap;gap:6px}
-div.tags.textcenter{justify-content:center}
-div.tags .ctag,#footer .widget_tag_cloud a.ctag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--r-pill);background:var(--brand-tint);color:var(--brand-text);border:1px solid var(--brand-border);font-size:12.5px!important;font-weight:600;line-height:1.7;white-space:nowrap}
-div.tags .ctag:hover,#footer .widget_tag_cloud a.ctag:hover{background:var(--brand-tint-2);color:var(--brand-text);border-color:var(--brand-strong)}
-/* THEME OVERRIDE: customizer.css still colours per-category chips
-   (.ctag-5{background:#fdd948 !important} ...) — the old palette that
-   failed contrast. The per-category classes are gone from the markup,
-   but this guard wins over any surviving .ctag-N rule anywhere. */
-div.articles article .ctag{background:var(--brand-tint)!important;color:var(--brand-text)!important;border-color:var(--brand-border)!important}
-/* ---------- Social buttons: ONE component, filled brand circle + white glyph ----------
-   The theme's fill-color variant strips the background (its colours come
-   from per-network classes our markup never had) — that is why header /
-   footer icons were invisible on a white header. The theme's stripping
-   rule is .epcl-social-buttons.fill-color .button (0,3,0), so the
-   override needs a.button (0,3,1) to beat it; the per-network colour
-   rules tie at (0,3,1) and static.css loads later, so white wins. */
-.epcl-social-buttons.fill-color a.button{width:44px;background:var(--brand-strong);color:#fff;border:0;box-shadow:none}
-.epcl-social-buttons.fill-color a.button:hover{background:#B91C42;color:#fff}
-.share-buttons .epcl-share-bottom a.button{background:var(--brand-strong);color:#fff}
-/* ---------- Header: flex row, compact menu, room to fit ----------
-   The 1200px container + 9 menu items + socials overflowed and the menu
-   wrapped onto a second row. Wider header container (1400px), tighter
-   menu spacing, socials hidden below 1500px viewports. */
-#header .menu-wrapper .grid-container{display:flex;align-items:center;gap:16px;max-width:1400px}
-#header .logo{flex:none;margin:0}
-#header nav.main-nav{flex:1;min-width:0}
-/* THEME OVERRIDE: in the classic header the socials bar is absolutely
-   positioned (top:85px, z-index:101) — it landed ON the logo and covered
-   the search button. As a static flex item it sits in the row like
-   everything else. The logo's theme margin:5px auto would also absorb
-   free space in a flex row, so it is zeroed. Selector ties the theme's
-   (1,2,0) and static.css loads later, so this wins. */
-#header.classic .epcl-social-buttons{position:static;top:auto;height:auto;line-height:normal;margin:0;padding:0;flex:none}
-#header nav.main-nav ul.menu{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center}
-#header nav.main-nav ul.menu>li{padding:12px 10px}
-#header nav.main-nav ul.menu>li>a{font-size:15px}
-@media (max-width:1500px){#header .epcl-social-buttons{display:none}}
-/* The drawer is a tablet/mobile-only pattern: it must never render on
-   desktop (the desktop nav shows from 1201px), but it MUST be available
-   wherever the hamburger shows (<=1200px) — hiding it from 768px broke
-   the drawer on tablets, and the display fix below would have been dead
-   code without the breakpoint fix. */
-@media (min-width:1201px){#header nav.mobile.main-nav{display:none!important}}
-/* THEME BUG FIX: our drawer lives inside #header, but the theme hides ALL
-   #header navs at <=1200px (display:none) — so tapping the hamburger
-   toggled body.menu-open and nothing ever appeared. The drawer is a fixed
-   panel hidden by opacity/visibility/transform when closed, so
-   display:block here is safe; desktop is covered by the 1201px rule. */
-#header nav.mobile.main-nav{display:block}
-/* THEME BUG FIX (mobile/tablet header): the hamburger is absolutely
-   positioned at the container's left edge (left:40px, 20px on phones)
-   and the search button is a flex item landing at the same left edge —
-   the two icons merged into one pink circle. Give the row left padding
-   so no flex item enters the hamburger's zone. The theme zeroes this
-   container's padding with !important at <=1200px, so this needs
-   !important too. */
-@media (max-width:1200px){#header .menu-wrapper .grid-container{padding-left:90px!important}}
-/* Sticky search button: the theme absolutely positions it (right:40px,
-   flipped to left:10px !important by rtl.css) at the container's left
-   edge — exactly where the RTL menu's last item lands, so it covered
-   "رامتین ∨". As a flex item in the header row it can never overlap the
-   menu; left/top are inert on a static element, so the rtl !important
-   offsets stop mattering. It stays visible in the sticky header too,
-   since sticky keeps the same flex row. */
-#header .epcl-search-button{position:static;transform:none;top:auto;flex:none;width:40px;height:40px;line-height:40px;margin-inline-start:8px}
-/* THEME QUIRK: the theme hides the search button in the sticky header
-   (display:none) and only rescues it inside @media (max-width:1200px) —
-   so on desktop it vanished on scroll, in the original site too. The
-   design system keeps search available in every header state, so the
-   rescue is extended to all widths (same selector, static.css wins). */
-#header.is-sticky div.menu-wrapper .epcl-search-button{display:block}
-/* ---------- Cards: image on top, content below ---------- */
-article.card-clean{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:36px}
-article.card-clean .card-thumb{display:block;position:relative;overflow:hidden}
-article.card-clean .card-thumb .fullimage{display:block;width:100%;aspect-ratio:16/9;background-size:cover;background-position:center;transition:transform .5s ease}
-article.card-clean:hover .card-thumb .fullimage{transform:scale(1.03)}
-article.card-clean .card-body{padding:22px 26px 24px}
-article.card-clean .tags{position:static;margin-bottom:10px}
-/* THEME OVERRIDE: the theme absolutely positions .post-title over the image
-   (div.articles article .post-title) and gives its link an inline
-   14px-border highlight — that is what broke every card title (invisible /
-   overlapping / running off the card). Cards put the title in flow. */
-div.articles article.card-clean .post-title{position:relative;left:auto;right:auto;bottom:auto;max-width:none;margin:0 0 10px;text-align:right}
-div.articles article.card-clean .post-title a{display:block;border:0}
-article.card-clean .post-title{font-size:clamp(21px,3.4vw,27px);font-weight:800;line-height:1.65}
-article.card-clean .post-title a{color:var(--ink)}
-article.card-clean .post-title a:hover{color:var(--brand-strong)}
-article.card-clean .post-excerpt{margin-bottom:16px;text-align:right}
-article.card-clean .post-excerpt p{margin:0}
-article.card-clean .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted)}
-article.card-clean .meta .author{display:inline-flex;align-items:center;gap:8px}
-article.card-clean .meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;flex:none}
-article.card-clean .meta .author-name{font-weight:600;color:var(--ink)}
-article.card-clean .meta svg{width:15px;height:15px;fill:var(--brand);vertical-align:-2px;margin-inline-end:3px}
-article.card-clean .continue-reading{display:inline-flex;align-items:center;gap:6px;margin-top:16px;color:var(--brand-strong);font-weight:700;font-size:15px}
-article.card-clean .continue-reading:hover{color:#B91C42}
-/* THEME OVERRIDE: the theme hides .continue-reading (position:absolute;
-   opacity:0) and only reveals it on .post-format-wrapper:hover — which
-   does not exist in the clean card markup, so "بیشتر بخوانید" was
-   invisible on every card (and permanently absent on touch devices). */
-div.articles article.card-clean .continue-reading{position:static;opacity:1}
-/* grid (archive) cards: same language, tighter */
-.articles.grid-posts article.card-clean .card-body{padding:18px 20px}
-.articles.grid-posts article.card-clean .post-title{font-size:19px;line-height:1.7}
-.articles.grid-posts article.card-clean .post-excerpt{font-size:14px}
-.articles.grid-posts article.card-clean .meta{font-size:12px;gap:4px 12px}
-/* THEME OVERRIDE: the theme's grid is float-based (.grid-33{float:left}),
-   so cards of different heights snag — rows break, a card drops to its
-   own row, gaps open (home, desktop). A real grid gives aligned rows and
-   equal-height cards everywhere the grid is used (home + archives). The
-   float classes on the cards are ignored for grid items; the excerpt
-   absorbs the slack so meta + "بیشتر بخوانید" sit together at the bottom. */
-.articles.grid-posts{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.articles.grid-posts article.card-clean{max-width:none;margin:0;display:flex;flex-direction:column}
-.articles.grid-posts article.card-clean .card-body{flex:1;display:flex;flex-direction:column}
-.articles.grid-posts article.card-clean .post-excerpt{flex:1}
-@media (max-width:1200px){.articles.grid-posts{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:767px){.articles.grid-posts{grid-template-columns:1fr;gap:20px}}
-/* ---------- Pagination: one component, one size (40px) ----------
-   The theme made prev/next big purple pills (5px 25px) and numbers small
-   grey circles — mismatched sizes and colours. Now every item is 40px,
-   neutral surface + border; current is the brand fill. Ranges collapse
-   to an ellipsis, so it stays one neat row on mobile too. */
-.epcl-pagination{padding:32px 0}
-.epcl-pagination div.nav{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
-.epcl-pagination div.nav a.post-page-numbers,.epcl-pagination div.nav span.post-page-numbers,.epcl-pagination div.nav a.prev-page,.epcl-pagination div.nav a.next-page{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 12px;border-radius:var(--r-md);font-size:15px;font-weight:600;line-height:1;background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);box-shadow:none}
-.epcl-pagination div.nav a.prev-page,.epcl-pagination div.nav a.next-page{padding:0 16px;color:var(--body)}
-.epcl-pagination div.nav a.post-page-numbers:hover,.epcl-pagination div.nav a.prev-page:hover,.epcl-pagination div.nav a.next-page:hover{border-color:var(--brand-strong);color:var(--brand-strong);transform:none;box-shadow:none}
-.epcl-pagination div.nav span.current{background:var(--brand-strong);border-color:var(--brand-strong);color:#fff;cursor:default}
-.epcl-pagination div.nav .pg-dots{color:var(--faint);padding:0 2px;font-weight:600}
-/* THEME BUG FIX: .articles holds floats, so it collapses to ~0 height and
-   the pagination — the following block — renders up beside the first row
-   of cards, squeezed into a vertical column. Give it its own full-width
-   row (the flex-basis covers the case where the container itself is flex). */
-#epcl-grid-posts-1>nav.epcl-pagination{clear:both;flex:1 1 100%}
-/* ---------- Post page: meta, author, related, siblings ---------- */
-div.meta.absolute .meta-info{font-size:13px}
-#author .flex{display:flex;gap:20px;align-items:flex-start}
-#author .avatar{flex:none}
-#author .avatar a.thumb{display:block;position:relative;width:110px;height:110px;border-radius:50%;overflow:hidden}
-#author .avatar .fullimage{position:absolute;inset:0;background-size:cover;background-position:center}
-#author .info{flex:1;min-width:0}
-#author .info h4{margin:0 0 4px}
-#author .info .position{margin:0 0 8px}
-#author .info p{margin:0 0 14px}
-#author .info .button{margin-top:4px}
-/* post meta author avatar (30px disc) */
-div.meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;vertical-align:middle;margin-inline-end:6px}
-section.related article .thumb,section.siblings article .thumb{position:relative;display:block;overflow:hidden;border-radius:8px}
-section.related article .thumb img{display:block;width:100%;height:200px;object-fit:cover}
-/* siblings thumb is a full-bleed absolute layer (theme positions it); the
-   <img> inside simply fills it. Title uses the theme's white .mask highlight. */
-section.siblings article .thumb{position:absolute;inset:0;border-radius:0}
-section.siblings article .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.no-comments-note{color:var(--muted);text-align:center;padding:18px 0}
-.static-comments-note{font-size:13px;color:var(--faint);text-align:center;margin-top:18px}
-/* permalink copy button: visible dark icon on the grey bar */
-.permalink .copy svg{fill:var(--ink)}
-.permalink .copy:hover svg{fill:var(--brand-strong)}
-/* ---------- Footer: consistent alignment + real bottom bar ---------- */
-#footer .widget_tag_cloud ul{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
-#footer .widget_tag_cloud ul li{display:inline-flex;margin:0;padding:0;border:0}
-#footer .widget .about p{color:var(--muted)}
-#footer .published{padding-bottom:10px}
-#footer .bottom-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px 26px;border-top:1px solid var(--line)}
-#footer .bottom-bar .copyright{margin:0;font-size:13.5px;color:var(--muted)}
-#footer .bottom-bar .epcl-social-buttons{margin:0}
-/* ---------- Sidebar widgets ---------- */
-.widget_epcl_posts_thumbs .item{position:relative;padding-right:100px;min-height:80px;margin-bottom:20px}
-.widget_epcl_posts_thumbs .item .thumb{position:absolute;right:0;top:0;width:80px;height:80px;border-radius:8px;background-size:cover;background-position:center}
-.widget_epcl_posts_thumbs .item .title{font-size:15px;font-weight:600;line-height:1.7;margin:0 0 4px}
-.widget_epcl_posts_thumbs .item time{font-size:12.5px;color:var(--faint)}
-.widget_recent_comments li a{display:block;font-size:14px;line-height:1.7}
-.widget_recent_comments li .comment-author{font-weight:600}
-/* ---------- Forms: 48px fields, brand focus ring ---------- */
-.wpcf7-form input[type=text],.wpcf7-form input[type=email],.wpcf7-form textarea{border:1px solid var(--line-strong);border-radius:var(--r-md);font-size:15px;color:var(--ink);background:var(--surface)}
-.wpcf7-form input[type=text],.wpcf7-form input[type=email]{height:48px;padding:0 14px}
-.wpcf7-form textarea{min-height:150px;padding:12px 14px}
-.wpcf7-form input:focus,.wpcf7-form textarea:focus{border-color:var(--brand-strong);outline:none;box-shadow:0 0 0 3px var(--brand-tint-2)}
-/* ---------- Donate page: copyable wallet + unbreakable email ---------- */
+/* Content never sets its own colours — the design system owns colour
+   (the old #00ccff blue headings came from WP inline styles). */
+.article-content h1,.article-content h2,.article-content h3,.article-content h4{color:var(--ink)!important}
+.article-content h1{font-size:clamp(28px,4vw,38px);line-height:1.5;font-weight:800;color:var(--ink);margin:0 0 20px}
+/* Article body links must read as links. */
+.article-content a{color:var(--accent-dark);text-decoration:underline;text-underline-offset:3px}
+.article-content a:hover{color:var(--accent)}
+.article-content img{max-width:100%;height:auto}
+.article-content figure{margin:0 0 25px}
+.article-content figcaption{color:#89919a;font-size:12px;margin-top:7px;text-align:center}
+.article-content hr{border:0;border-top:1px solid var(--line);margin:30px 0}
+.article-content iframe{max-width:100%;width:100%;height:auto;aspect-ratio:16/9;border:0}
+.article-content code{font:13.5px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;background:#f5f7f8;border:1px solid var(--line);border-radius:4px;padding:1px 6px;direction:ltr;unicode-bidi:embed}
+.article-content pre code{background:none;border:0;padding:0;font:inherit}
+/* Posts with no h2 headings have no TOC — single centred column. */
+.article-layout.no-toc{grid-template-columns:minmax(0,720px)}
+/* Generic pages (course landing, service pages, donate): hero + centred body. */
+.page-body{max-width:720px;margin-inline:auto;padding-block:50px 85px}
+/* WPBakery buttons become the Figma primary button. */
+.epcl-button{display:inline-flex;align-items:center;justify-content:center;gap:11px;background:var(--accent);color:#fff;border:0;min-height:48px;padding:0 22px;font-size:13px;font-weight:700}
+.epcl-button:hover{background:var(--accent-dark);color:#fff}
+/* Donate page: copyable wallet + unbreakable email. */
 .wallet-wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:10px 0}
-.wallet-address{display:inline-block;direction:ltr;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:13px;overflow-wrap:anywhere;max-width:100%}
+.wallet-address{display:inline-block;direction:ltr;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:13px;overflow-wrap:anywhere;max-width:100%}
 .copy-address{flex:none}
 .email-inline{white-space:nowrap}
-/* ---------- Mobile drawer: the theme's fixed side panel (left), RTL text ---------- */
-nav.mobile.main-nav{background:#fff;text-align:right;direction:rtl}
-nav.mobile.main-nav ul.menu>li>a{font-weight:600;min-height:44px;display:flex;align-items:center}
-nav.mobile.main-nav ul.menu li.menu-item-has-children.open>ul.sub-menu{opacity:1;visibility:visible;max-height:50vh!important;overflow:auto;padding:5px 0 0}
-nav.mobile.main-nav ul.menu li.menu-item-has-children.open:after{color:var(--brand)}
-/* ---------- Responsive / overflow guards — no horizontal scroll on mobile ---------- */
-.post-content img,.featured-image img,.fullwidth,.post-format-image img{max-width:100%!important;height:auto!important}
-/* Only links may split mid-token (long URLs); normal prose words never break early */
-.post-content a{overflow-wrap:break-word}
-.post-content code{overflow-wrap:break-word}
-.post-content table{display:block;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
-.post-content iframe{max-width:100%;width:100%;height:auto;aspect-ratio:16/9}
-.permalink input{max-width:100%;box-sizing:border-box}
-.grid-container{box-sizing:border-box}
-.search-field{font-size:16px}
-.mfp-hide{display:none!important}
-.mfp-hide.open{display:flex!important;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);align-items:flex-start;justify-content:center;padding-top:15vh}
-.mfp-hide.open .search-form{display:flex;width:min(680px,90%)}
-.epcl-comments.hidden{display:none}
-#back-to-top{display:none;position:fixed;bottom:24px;left:24px;z-index:900}
-/* Card hover mask sprite (urban-sprite-op.png) could not be recovered from the
-   old server — disable the mask so there is no failed request; hover still works */
-.mask-effect .mask{-webkit-mask:none!important;mask:none!important}
-/* SyntaxHighlighter code blocks (plugin JS not shipped; keep code readable) */
-pre[class*="brush:"]{direction:ltr!important;text-align:left!important;background:#f6f8fa!important;border:1px solid #e5e7eb;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Consolas,Monaco,monospace!important;font-size:13.5px;line-height:1.7;color:#24292f;white-space:pre}
-.post-content pre{max-width:100%}
-.search-results article{margin-bottom:18px}
-.search-results .result-title{font-size:18px}
-@media (max-width:767px){
-  body{font-size:16px;line-height:1.9}
-  h1.main-title,.post-title{font-size:23px}
-  .post-content h2{font-size:20px}
-  .grid-container{padding-left:15px;padding-right:15px}
-  /* THEME BUG FIX: the theme never resets .grid-70/.grid-30 on mobile, so the
-     article text sat in a 70%-wide column (~245px on a 390px phone) and lines
-     broke early with 30% empty space beside them. Full width on mobile. */
-  .grid-70,.grid-30{width:100%!important;float:none!important}
-  /* Desktop nav only: the mobile drawer (nav.mobile.main-nav) is a separate
-     fixed panel handled by the theme CSS — never display:block it in flow. */
-  #header nav.main-nav:not(.mobile){display:none}
-  article.card-clean .card-body{padding:18px 18px 20px}
-  article.card-clean .meta{gap:4px 12px}
-  #author .flex{flex-direction:column;align-items:center;text-align:center}
-  #author .info{text-align:center}
-  #footer .bottom-bar{justify-content:center;text-align:center}
-  .widget_epcl_posts_thumbs .item{padding-right:96px}
-}
+/* Comments: real list, Figma-clean. */
+.comment-list{list-style:none;margin:0;padding:0}
+.comment-item{border-top:1px solid var(--line);padding:20px 0}
+.comment-item:first-child{border-top:0}
+.comment-head{display:flex;align-items:center;gap:12px}
+.comment-avatar{width:45px;height:45px;border-radius:50%;object-fit:cover;flex:none}
+.comment-author{font-weight:700;font-size:13px}
+.comment-date{color:var(--muted);font-size:11px}
+.comment-text{color:#3e4954;font-size:15px;line-height:1.9;margin-top:10px}
+.comment-text p{margin:0 0 10px}
+.comment-children{list-style:none;margin:14px 57px 0 0;padding:0}
+.comment-children .comment-item{border-top:1px solid #eef0f2;padding:14px 0 0}
+.static-comments-note{font-size:13px;color:var(--muted);text-align:center;margin-top:18px}
+.no-comments-note{color:var(--muted);text-align:center;padding:18px 0}
+/* Search page results. */
+.search-results article{margin-bottom:18px;border-top:1px solid var(--line);padding-top:18px}
+.search-results .result-title{font-size:18px;margin:0 0 6px}
+.search-results .result-title a:hover{color:var(--accent)}
+.search-results p{color:var(--muted);font-size:14px;margin:0}
+/* Newsletter: no backend exists, so the form says so honestly on submit. */
+.newsletter-note{font-size:12px;color:#aeb7bf;margin:10px 0 0;line-height:1.8}
+/* Bio lists (real about-page content inside the Figma bio section). */
+.bio-copy ul{padding-right:24px;color:var(--muted);font-size:15px;line-height:2.1}
+.bio-copy li{margin:4px 0}
+.bio-copy li::marker{color:var(--accent);font-weight:700}
+.bio-copy hr{border:0;border-top:1px solid var(--line);margin:24px 0}
+/* Long drawer menu scrolls. */
+.drawer-nav{overflow-y:auto}
+.pagination .prev svg{transform:scaleX(-1)}
+.search-modal{display:none}
+.search-modal.open{display:grid}

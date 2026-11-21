@@ -1,27 +1,46 @@
-// ramtiin.ir static — vanilla replacements for the Veen theme behaviours.
+// ramtiin.ir static — vanilla JS for the Figma design behaviours.
 document.addEventListener('DOMContentLoaded', function () {
-  var header = document.getElementById('header');
-  function onScroll() {
-    if (header) header.classList.toggle('is-sticky', window.scrollY > 10);
-    var btt = document.getElementById('back-to-top');
-    if (btt) btt.style.display = window.scrollY > 400 ? 'block' : 'none';
+  // mobile drawer (Figma: .overlay + .drawer with .is-open, body scroll lock)
+  var drawer = document.querySelector('.drawer');
+  var overlay = document.querySelector('.overlay');
+  function openDrawer() {
+    if (drawer) drawer.classList.add('is-open');
+    if (overlay) overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
   }
-  window.addEventListener('scroll', onScroll); onScroll();
-  // mobile menu (side drawer, theme pattern: body.menu-open + overlay)
-  var burger = document.querySelector('.menu-mobile');
-  function closeMenu() { document.body.classList.remove('menu-open'); }
-  if (burger) burger.addEventListener('click', function () {
-    document.body.classList.toggle('menu-open');
+  function closeDrawer() {
+    if (drawer) drawer.classList.remove('is-open');
+    if (overlay) overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-open-drawer]').forEach(function (b) {
+    b.addEventListener('click', openDrawer);
   });
-  var overlay = document.querySelector('.menu-overlay');
-  if (overlay) overlay.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
-  // drawer sub-menus: first tap expands, second tap follows the link
-  document.querySelectorAll('nav.mobile.main-nav li.menu-item-has-children > a').forEach(function (a) {
-    a.addEventListener('click', function (e) {
-      var li = a.parentElement;
-      if (!li.classList.contains('open')) { e.preventDefault(); li.classList.add('open'); }
-    });
+  document.querySelectorAll('[data-close-drawer]').forEach(function (b) {
+    b.addEventListener('click', closeDrawer);
+  });
+  // search modal (Figma: .search-modal with .open; the form submits to /search/?q=)
+  var modal = document.querySelector('.search-modal');
+  function openSearch() {
+    if (!modal) return;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var i = modal.querySelector('input');
+    if (i) i.focus();
+  }
+  function closeSearch() {
+    if (!modal) return;
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-open-search]').forEach(function (b) {
+    b.addEventListener('click', openSearch);
+  });
+  document.querySelectorAll('[data-close-search]').forEach(function (b) {
+    b.addEventListener('click', closeSearch);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closeDrawer(); closeSearch(); }
   });
   // generic copy buttons (donate wallet addresses)
   document.querySelectorAll('[data-copy]').forEach(function (b) {
@@ -31,35 +50,22 @@ document.addEventListener('DOMContentLoaded', function () {
       else { var ta = document.createElement('textarea'); ta.value = b.getAttribute('data-copy'); document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }
     });
   });
-  // search lightbox
-  var lightbox = document.getElementById('search-lightbox');
-  document.querySelectorAll('.epcl-search-button').forEach(function (b) {
-    b.addEventListener('click', function (e) { e.preventDefault(); if (lightbox) { lightbox.classList.add('open'); var i = lightbox.querySelector('input'); if (i) i.focus(); } });
+  // newsletter: no backend exists — say so honestly instead of faking a signup.
+  var news = document.querySelector('.newsletter');
+  if (news) news.addEventListener('submit', function (e) {
+    e.preventDefault();
+    news.outerHTML = '<p class="newsletter-note">خبرنامه هنوز فعال نیست — مقاله‌های تازه را در <a href="https://t.me/netadminplus" target="_blank" rel="noopener">کانال تلگرام</a> دنبال کنید.</p>';
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lightbox) lightbox.classList.remove('open'); });
-  if (lightbox) lightbox.addEventListener('click', function (e) { if (e.target === lightbox) lightbox.classList.remove('open'); });
-  // back to top
-  var btt = document.getElementById('back-to-top');
-  if (btt) btt.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  // copy permalink
-  var copyBtn = document.querySelector('.permalink .copy');
-  var copyInput = document.getElementById('copy-link');
-  if (copyBtn && copyInput) copyBtn.addEventListener('click', function () {
-    var done = function () { copyBtn.setAttribute('title', 'کپی شد!'); setTimeout(function(){ copyBtn.removeAttribute('title'); }, 2000); };
-    if (navigator.clipboard) navigator.clipboard.writeText(copyInput.value).then(done);
-    else { copyInput.select(); document.execCommand('copy'); done(); }
-  });
-  // show comments
-  var showBtn = document.getElementById('show-comments');
-  var comments = document.querySelector('.epcl-comments');
-  function openComments() { if (comments) comments.classList.remove('hidden'); if (showBtn) showBtn.style.display = 'none'; }
-  if (showBtn) showBtn.addEventListener('click', openComments);
-  if (window.location.hash === '#show-comments') openComments();
-  // any '#show-comments' anchor (card meta, post meta pill) opens the section
-  document.querySelectorAll('a[href$="#show-comments"]').forEach(function (a) {
-    a.addEventListener('click', function (e) {
-      e.preventDefault(); openComments();
-      if (comments) comments.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+  // contact form: interim mailto flow (no backend yet) + Figma success state.
+  var cform = document.querySelector('.contact-form');
+  if (cform) cform.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var val = function (n) { var el = cform.querySelector('[name="' + n + '"]'); return el ? el.value : ''; };
+    var subject = val('your-subject') || 'تماس از وب‌سایت';
+    var body = val('your-message') + '\n\n— ' + val('your-name') + (val('your-email') ? ' (' + val('your-email') + ')' : '');
+    window.location.href = 'mailto:ramtin.rahmani@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    cform.innerHTML = '<div class="success-message"><span><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></span><h3>پیام شما آماده ارسال شد.</h3><p>برنامه ایمیل شما باز شد. اگر باز نشد، مستقیم به ramtin.rahmani@gmail.com ایمیل بزنید.</p><button type="button" id="contact-again">ارسال پیام دیگر</button></div>';
+    var again = document.getElementById('contact-again');
+    if (again) again.addEventListener('click', function () { window.location.reload(); });
   });
 });
