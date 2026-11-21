@@ -350,6 +350,11 @@ html,body{overflow-x:clip}
 /* WPBakery buttons become the Figma primary button. */
 .epcl-button{display:inline-flex;align-items:center;justify-content:center;gap:11px;background:var(--accent);color:#fff;border:0;min-height:48px;padding:0 22px;font-size:13px;font-weight:700}
 .epcl-button:hover{background:var(--accent-dark);color:#fff}
+/* Course CTA buttons live inside .article-content, whose link rule
+   (.article-content a, accent-dark) otherwise beats .epcl-button's white. */
+.article-content a.epcl-button,.article-content a.primary-button{color:#fff;text-decoration:none}
+.article-content a.epcl-button:hover,.article-content a.primary-button:hover{color:#fff}
+.epcl-button:hover{background:var(--accent-dark);color:#fff}
 /* Donate page: copyable wallet + unbreakable email. */
 .wallet-wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:10px 0}
 .wallet-address{display:inline-block;direction:ltr;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:13px;overflow-wrap:anywhere;max-width:100%}
