@@ -74,8 +74,15 @@ div.tags .ctag:hover,#footer .widget_tag_cloud a.ctag:hover{background:var(--bra
    wrapped onto a second row. Wider header container (1400px), tighter
    menu spacing, socials hidden below 1500px viewports. */
 #header .menu-wrapper .grid-container{display:flex;align-items:center;gap:16px;max-width:1400px}
-#header .logo{flex:none}
+#header .logo{flex:none;margin:0}
 #header nav.main-nav{flex:1;min-width:0}
+/* THEME OVERRIDE: in the classic header the socials bar is absolutely
+   positioned (top:85px, z-index:101) — it landed ON the logo and covered
+   the search button. As a static flex item it sits in the row like
+   everything else. The logo's theme margin:5px auto would also absorb
+   free space in a flex row, so it is zeroed. Selector ties the theme's
+   (1,2,0) and static.css loads later, so this wins. */
+#header.classic .epcl-social-buttons{position:static;top:auto;height:auto;line-height:normal;margin:0;padding:0;flex:none}
 #header nav.main-nav ul.menu{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center}
 #header nav.main-nav ul.menu>li{padding:12px 10px}
 #header nav.main-nav ul.menu>li>a{font-size:15px}
