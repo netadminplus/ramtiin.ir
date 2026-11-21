@@ -83,12 +83,10 @@ div.meta.absolute .meta-info{font-size:13px}
 div.meta .author-image{display:inline-block;width:30px;height:30px;border-radius:50%;background-size:cover;background-position:center;vertical-align:middle;margin-inline-end:6px}
 section.related article .thumb,section.siblings article .thumb{position:relative;display:block;overflow:hidden;border-radius:8px}
 section.related article .thumb img{display:block;width:100%;height:200px;object-fit:cover}
-section.siblings article{min-height:220px}
-section.siblings article .thumb{position:absolute;inset:0;border-radius:8px}
+/* siblings thumb is a full-bleed absolute layer (theme positions it); the
+   <img> inside simply fills it. Title uses the theme's white .mask highlight. */
+section.siblings article .thumb{position:absolute;inset:0;border-radius:0}
 section.siblings article .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-section.siblings article .info{z-index:3}
-section.siblings article::after{content:"";position:absolute;inset:0;border-radius:8px;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0) 60%);z-index:2;pointer-events:none}
-section.siblings article .info .title a,section.siblings article .info .meta{color:#fff}
 .no-comments-note{color:#596172;text-align:center;padding:18px 0}
 .static-comments-note{font-size:13px;color:#9aa0a6;text-align:center;margin-top:18px}
 /* permalink copy button: visible dark icon on the grey bar */
