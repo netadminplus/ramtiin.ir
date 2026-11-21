@@ -60,11 +60,14 @@ div.tags.textcenter{justify-content:center}
 div.tags .ctag,#footer .widget_tag_cloud a.ctag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--r-pill);background:var(--brand-tint);color:var(--brand-text);border:1px solid var(--brand-border);font-size:12.5px!important;font-weight:600;line-height:1.7;white-space:nowrap}
 div.tags .ctag:hover,#footer .widget_tag_cloud a.ctag:hover{background:var(--brand-tint-2);color:var(--brand-text);border-color:var(--brand-strong)}
 /* ---------- Social buttons: ONE component, filled brand circle + white glyph ----------
-   The theme's fill-color variant strips the background but keeps white text
-   (its colours come from per-network classes our markup never had) — that
-   is why header/footer icons were invisible on a white header. */
-.epcl-social-buttons a,.epcl-social-buttons.fill-color a{background:var(--brand-strong);color:#fff;border:0;box-shadow:none}
-.epcl-social-buttons.fill-color a{width:44px}
+   The theme's fill-color variant strips the background (its colours come
+   from per-network classes our markup never had) — that is why header /
+   footer icons were invisible on a white header. The theme's stripping
+   rule is .epcl-social-buttons.fill-color .button (0,3,0), so the
+   override needs a.button (0,3,1) to beat it; the per-network colour
+   rules tie at (0,3,1) and static.css loads later, so white wins. */
+.epcl-social-buttons.fill-color a.button{width:44px;background:var(--brand-strong);color:#fff;border:0;box-shadow:none}
+.epcl-social-buttons.fill-color a.button:hover{background:#B91C42;color:#fff}
 .share-buttons .epcl-share-bottom a.button{background:var(--brand-strong);color:#fff}
 /* ---------- Header: flex row, compact menu, room to fit ----------
    The 1200px container + 9 menu items + socials overflowed and the menu
@@ -80,9 +83,14 @@ div.tags .ctag:hover,#footer .widget_tag_cloud a.ctag:hover{background:var(--bra
 /* The drawer is a mobile-only pattern: it must never render on desktop,
    whatever the theme's off-canvas transform does. */
 @media (min-width:768px){#header nav.mobile.main-nav{display:none!important}}
-/* Sticky search button: the theme already shows it centred (40px circle)
-   when sticky — the earlier static override broke it into an oval. No
-   override here on purpose. */
+/* Sticky search button: the theme absolutely positions it (right:40px,
+   flipped to left:10px !important by rtl.css) at the container's left
+   edge — exactly where the RTL menu's last item lands, so it covered
+   "رامتین ∨". As a flex item in the header row it can never overlap the
+   menu; left/top are inert on a static element, so the rtl !important
+   offsets stop mattering. It stays visible in the sticky header too,
+   since sticky keeps the same flex row. */
+#header .epcl-search-button{position:static;transform:none;top:auto;flex:none;width:40px;height:40px;line-height:40px;margin-inline-start:8px}
 /* ---------- Cards: image on top, content below ---------- */
 article.card-clean{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:36px}
 article.card-clean .card-thumb{display:block;position:relative;overflow:hidden}
