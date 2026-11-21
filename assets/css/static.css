@@ -98,6 +98,12 @@ div.tags .ctag:hover,#footer .widget_tag_cloud a.ctag:hover{background:var(--bra
    offsets stop mattering. It stays visible in the sticky header too,
    since sticky keeps the same flex row. */
 #header .epcl-search-button{position:static;transform:none;top:auto;flex:none;width:40px;height:40px;line-height:40px;margin-inline-start:8px}
+/* THEME QUIRK: the theme hides the search button in the sticky header
+   (display:none) and only rescues it inside @media (max-width:1200px) —
+   so on desktop it vanished on scroll, in the original site too. The
+   design system keeps search available in every header state, so the
+   rescue is extended to all widths (same selector, static.css wins). */
+#header.is-sticky div.menu-wrapper .epcl-search-button{display:block}
 /* ---------- Cards: image on top, content below ---------- */
 article.card-clean{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:36px}
 article.card-clean .card-thumb{display:block;position:relative;overflow:hidden}
