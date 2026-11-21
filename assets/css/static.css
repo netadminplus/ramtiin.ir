@@ -374,8 +374,9 @@ html,body{overflow-x:clip}
 .search-results .result-title{font-size:18px;margin:0 0 6px}
 .search-results .result-title a:hover{color:var(--accent)}
 .search-results p{color:var(--muted);font-size:14px;margin:0}
-/* Newsletter: no backend exists, so the form says so honestly on submit. */
-.newsletter-note{font-size:12px;color:#aeb7bf;margin:10px 0 0;line-height:1.8}
+/* Footer is 3 columns now (newsletter removed 2026-11-21 — no newsletter exists). */
+.footer-grid{grid-template-columns:1.45fr .7fr .7fr}
+@media (max-width:960px){.footer-grid section:last-child{grid-column:auto}}
 /* Bio lists (real about-page content inside the Figma bio section). */
 .bio-copy ul{padding-right:24px;color:var(--muted);font-size:15px;line-height:2.1}
 .bio-copy li{margin:4px 0}

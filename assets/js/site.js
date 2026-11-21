@@ -50,12 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
       else { var ta = document.createElement('textarea'); ta.value = b.getAttribute('data-copy'); document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }
     });
   });
-  // newsletter: no backend exists — say so honestly instead of faking a signup.
-  var news = document.querySelector('.newsletter');
-  if (news) news.addEventListener('submit', function (e) {
-    e.preventDefault();
-    news.outerHTML = '<p class="newsletter-note">خبرنامه هنوز فعال نیست — مقاله‌های تازه را در <a href="https://t.me/netadminplus" target="_blank" rel="noopener">کانال تلگرام</a> دنبال کنید.</p>';
-  });
   // contact form: interim mailto flow (no backend yet) + Figma success state.
   var cform = document.querySelector('.contact-form');
   if (cform) cform.addEventListener('submit', function (e) {
