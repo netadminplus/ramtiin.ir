@@ -40,6 +40,10 @@ h1.main-title,.post-title{font-size:clamp(23px,5vw,31px);line-height:1.6;font-we
 .post-content h2{font-size:clamp(20px,4vw,25px);line-height:1.7;font-weight:700;color:var(--ink)}
 .post-content h3{font-size:clamp(18px,3.5vw,21px);line-height:1.7;font-weight:700;color:var(--ink)}
 .post-content h4{font-size:clamp(16px,3vw,19px);line-height:1.7;font-weight:700;color:var(--ink)}
+/* CONTENT RULE: no heading colour may come from WordPress inline styles
+   (the old #00ccff blue headings) — the design system owns heading
+   colour. Inline styles beat the rules above, so this needs !important. */
+.post-content h1,.post-content h2,.post-content h3,.post-content h4{color:var(--ink)!important}
 #header .logo a,.published .logo a{font-weight:800}
 .widget-title{font-weight:700!important}
 .post-excerpt{font-size:15px;line-height:1.9;color:var(--body)}
@@ -59,6 +63,11 @@ div.tags{display:flex;flex-wrap:wrap;gap:6px}
 div.tags.textcenter{justify-content:center}
 div.tags .ctag,#footer .widget_tag_cloud a.ctag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--r-pill);background:var(--brand-tint);color:var(--brand-text);border:1px solid var(--brand-border);font-size:12.5px!important;font-weight:600;line-height:1.7;white-space:nowrap}
 div.tags .ctag:hover,#footer .widget_tag_cloud a.ctag:hover{background:var(--brand-tint-2);color:var(--brand-text);border-color:var(--brand-strong)}
+/* THEME OVERRIDE: customizer.css still colours per-category chips
+   (.ctag-5{background:#fdd948 !important} ...) — the old palette that
+   failed contrast. The per-category classes are gone from the markup,
+   but this guard wins over any surviving .ctag-N rule anywhere. */
+div.articles article .ctag{background:var(--brand-tint)!important;color:var(--brand-text)!important;border-color:var(--brand-border)!important}
 /* ---------- Social buttons: ONE component, filled brand circle + white glyph ----------
    The theme's fill-color variant strips the background (its colours come
    from per-network classes our markup never had) — that is why header /
@@ -87,9 +96,26 @@ div.tags .ctag:hover,#footer .widget_tag_cloud a.ctag:hover{background:var(--bra
 #header nav.main-nav ul.menu>li{padding:12px 10px}
 #header nav.main-nav ul.menu>li>a{font-size:15px}
 @media (max-width:1500px){#header .epcl-social-buttons{display:none}}
-/* The drawer is a mobile-only pattern: it must never render on desktop,
-   whatever the theme's off-canvas transform does. */
-@media (min-width:768px){#header nav.mobile.main-nav{display:none!important}}
+/* The drawer is a tablet/mobile-only pattern: it must never render on
+   desktop (the desktop nav shows from 1201px), but it MUST be available
+   wherever the hamburger shows (<=1200px) — hiding it from 768px broke
+   the drawer on tablets, and the display fix below would have been dead
+   code without the breakpoint fix. */
+@media (min-width:1201px){#header nav.mobile.main-nav{display:none!important}}
+/* THEME BUG FIX: our drawer lives inside #header, but the theme hides ALL
+   #header navs at <=1200px (display:none) — so tapping the hamburger
+   toggled body.menu-open and nothing ever appeared. The drawer is a fixed
+   panel hidden by opacity/visibility/transform when closed, so
+   display:block here is safe; desktop is covered by the 1201px rule. */
+#header nav.mobile.main-nav{display:block}
+/* THEME BUG FIX (mobile/tablet header): the hamburger is absolutely
+   positioned at the container's left edge (left:40px, 20px on phones)
+   and the search button is a flex item landing at the same left edge —
+   the two icons merged into one pink circle. Give the row left padding
+   so no flex item enters the hamburger's zone. The theme zeroes this
+   container's padding with !important at <=1200px, so this needs
+   !important too. */
+@media (max-width:1200px){#header .menu-wrapper .grid-container{padding-left:90px!important}}
 /* Sticky search button: the theme absolutely positions it (right:40px,
    flipped to left:10px !important by rtl.css) at the container's left
    edge — exactly where the RTL menu's last item lands, so it covered
@@ -120,7 +146,7 @@ div.articles article.card-clean .post-title a{display:block;border:0}
 article.card-clean .post-title{font-size:clamp(21px,3.4vw,27px);font-weight:800;line-height:1.65}
 article.card-clean .post-title a{color:var(--ink)}
 article.card-clean .post-title a:hover{color:var(--brand-strong)}
-article.card-clean .post-excerpt{margin-bottom:16px}
+article.card-clean .post-excerpt{margin-bottom:16px;text-align:right}
 article.card-clean .post-excerpt p{margin:0}
 article.card-clean .meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted)}
 article.card-clean .meta .author{display:inline-flex;align-items:center;gap:8px}
@@ -129,6 +155,11 @@ article.card-clean .meta .author-name{font-weight:600;color:var(--ink)}
 article.card-clean .meta svg{width:15px;height:15px;fill:var(--brand);vertical-align:-2px;margin-inline-end:3px}
 article.card-clean .continue-reading{display:inline-flex;align-items:center;gap:6px;margin-top:16px;color:var(--brand-strong);font-weight:700;font-size:15px}
 article.card-clean .continue-reading:hover{color:#B91C42}
+/* THEME OVERRIDE: the theme hides .continue-reading (position:absolute;
+   opacity:0) and only reveals it on .post-format-wrapper:hover — which
+   does not exist in the clean card markup, so "بیشتر بخوانید" was
+   invisible on every card (and permanently absent on touch devices). */
+div.articles article.card-clean .continue-reading{position:static;opacity:1}
 /* grid (archive) cards: same language, tighter */
 .articles.grid-posts article.card-clean .card-body{padding:18px 20px}
 .articles.grid-posts article.card-clean .post-title{font-size:19px;line-height:1.7}
