@@ -331,6 +331,7 @@ html,body{overflow-x:clip}
 /* Content never sets its own colours — the design system owns colour
    (the old #00ccff blue headings came from WP inline styles). */
 .article-content h1,.article-content h2,.article-content h3,.article-content h4{color:var(--ink)!important}
+.article-content .author-box h3{color:#fff!important}
 .article-content h1{font-size:clamp(28px,4vw,38px);line-height:1.5;font-weight:800;color:var(--ink);margin:0 0 20px}
 /* Article body links must read as links. */
 .article-content a{color:var(--accent-dark);text-decoration:underline;text-underline-offset:3px}
