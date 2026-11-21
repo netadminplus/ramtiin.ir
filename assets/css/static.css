@@ -165,6 +165,18 @@ div.articles article.card-clean .continue-reading{position:static;opacity:1}
 .articles.grid-posts article.card-clean .post-title{font-size:19px;line-height:1.7}
 .articles.grid-posts article.card-clean .post-excerpt{font-size:14px}
 .articles.grid-posts article.card-clean .meta{font-size:12px;gap:4px 12px}
+/* THEME OVERRIDE: the theme's grid is float-based (.grid-33{float:left}),
+   so cards of different heights snag — rows break, a card drops to its
+   own row, gaps open (home, desktop). A real grid gives aligned rows and
+   equal-height cards everywhere the grid is used (home + archives). The
+   float classes on the cards are ignored for grid items; the excerpt
+   absorbs the slack so meta + "بیشتر بخوانید" sit together at the bottom. */
+.articles.grid-posts{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.articles.grid-posts article.card-clean{max-width:none;margin:0;display:flex;flex-direction:column}
+.articles.grid-posts article.card-clean .card-body{flex:1;display:flex;flex-direction:column}
+.articles.grid-posts article.card-clean .post-excerpt{flex:1}
+@media (max-width:1200px){.articles.grid-posts{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:767px){.articles.grid-posts{grid-template-columns:1fr;gap:20px}}
 /* ---------- Pagination: one component, one size (40px) ----------
    The theme made prev/next big purple pills (5px 25px) and numbers small
    grey circles — mismatched sizes and colours. Now every item is 40px,
@@ -177,6 +189,11 @@ div.articles article.card-clean .continue-reading{position:static;opacity:1}
 .epcl-pagination div.nav a.post-page-numbers:hover,.epcl-pagination div.nav a.prev-page:hover,.epcl-pagination div.nav a.next-page:hover{border-color:var(--brand-strong);color:var(--brand-strong);transform:none;box-shadow:none}
 .epcl-pagination div.nav span.current{background:var(--brand-strong);border-color:var(--brand-strong);color:#fff;cursor:default}
 .epcl-pagination div.nav .pg-dots{color:var(--faint);padding:0 2px;font-weight:600}
+/* THEME BUG FIX: .articles holds floats, so it collapses to ~0 height and
+   the pagination — the following block — renders up beside the first row
+   of cards, squeezed into a vertical column. Give it its own full-width
+   row (the flex-basis covers the case where the container itself is flex). */
+#epcl-grid-posts-1>nav.epcl-pagination{clear:both;flex:1 1 100%}
 /* ---------- Post page: meta, author, related, siblings ---------- */
 div.meta.absolute .meta-info{font-size:13px}
 #author .flex{display:flex;gap:20px;align-items:flex-start}
