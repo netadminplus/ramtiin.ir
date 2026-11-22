@@ -70,17 +70,5 @@ document.addEventListener('DOMContentLoaded', function () {
       else fallback();
     });
     wrap.appendChild(b);
-  });
-  // contact form: interim mailto flow (no backend yet) + Figma success state.
-  var cform = document.querySelector('.contact-form');
-  if (cform) cform.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var val = function (n) { var el = cform.querySelector('[name="' + n + '"]'); return el ? el.value : ''; };
-    var subject = val('your-subject') || 'تماس از وب‌سایت';
-    var body = val('your-message') + '\n\n— ' + val('your-name') + (val('your-email') ? ' (' + val('your-email') + ')' : '');
-    window.location.href = 'mailto:ramtin.rahmani@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    cform.innerHTML = '<div class="success-message"><span><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></span><h3>پیام شما آماده ارسال شد.</h3><p>برنامه ایمیل شما باز شد. اگر باز نشد، مستقیم به ramtin.rahmani@gmail.com ایمیل بزنید.</p><button type="button" id="contact-again">ارسال پیام دیگر</button></div>';
-    var again = document.getElementById('contact-again');
-    if (again) again.addEventListener('click', function () { window.location.reload(); });
-  });
+});
 });
