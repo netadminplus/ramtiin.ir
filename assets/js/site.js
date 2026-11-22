@@ -50,6 +50,27 @@ document.addEventListener('DOMContentLoaded', function () {
       else { var ta = document.createElement('textarea'); ta.value = b.getAttribute('data-copy'); document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }
     });
   });
+  // code blocks: a copy button on EVERY <pre> (design-system rule —
+  // every code block on the blog must be copyable, no exceptions).
+  document.querySelectorAll('pre').forEach(function (pre) {
+    var wrap = document.createElement('div');
+    wrap.className = 'codeblock';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'copy-code';
+    b.textContent = 'کپی';
+    b.setAttribute('aria-label', 'کپی کد');
+    b.addEventListener('click', function () {
+      var text = pre.textContent.replace(/\n$/, '');
+      var done = function () { b.textContent = 'کپی شد!'; setTimeout(function(){ b.textContent = 'کپی'; }, 2000); };
+      var fallback = function () { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); done(); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    });
+    wrap.appendChild(b);
+  });
   // contact form: interim mailto flow (no backend yet) + Figma success state.
   var cform = document.querySelector('.contact-form');
   if (cform) cform.addEventListener('submit', function (e) {
