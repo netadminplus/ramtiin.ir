@@ -19,6 +19,31 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-close-drawer]').forEach(function (b) {
     b.addEventListener('click', closeDrawer);
   });
+  // desktop dropdowns: click toggles (touch), hover/focus handled by CSS
+  document.querySelectorAll('.nav-drop').forEach(function (d) {
+    var btn = d.querySelector('.nav-parent');
+    if (!btn) return;
+    btn.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      var open = d.classList.contains('is-open');
+      document.querySelectorAll('.nav-drop.is-open').forEach(function (o) {
+        o.classList.remove('is-open');
+        var b = o.querySelector('.nav-parent');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      });
+      if (!open) {
+        d.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+  document.addEventListener('click', function () {
+    document.querySelectorAll('.nav-drop.is-open').forEach(function (o) {
+      o.classList.remove('is-open');
+      var b = o.querySelector('.nav-parent');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+  });
   // search modal (Figma: .search-modal with .open; the form submits to /search/?q=)
   var modal = document.querySelector('.search-modal');
   function openSearch() {
