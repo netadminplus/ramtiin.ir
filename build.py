@@ -288,7 +288,7 @@ NAV = [
     ('VOIP', '/category/voip/'),
     ('ترفند', '/category/tricks/'),
     ('درباره من', '/درباره-من/'),
-    ('تماس با من', '/contact/'),
+    ('تماس با من', '/درباره-من/#contact'),
     ('خدمات', '#', [('پشتیبانی شبکه در شیراز', '/پشتیبانی-شبکه-در-شیراز/'),
                     ('راه‌اندازی شبکه در شیراز', '/راه-اندازی-شبکه-در-شیراز/'),
                     ('پشتیبانی تلفن ویپ', '/پشتیبانی-تلفن-ویپ/')]),
@@ -375,7 +375,7 @@ def footer_html():
 <p>یادداشت‌ها و آموزش‌های کاربردی درباره شبکه و دواپس.</p>
 {socials_html()}
 </section>
-<section><h3>دسترسی سریع</h3><a href="/">صفحه اصلی</a><a href="/درباره-من/">درباره من</a><a href="/contact/">تماس با من</a><a href="/پشتیبانی-شبکه-در-شیراز/">خدمات شبکه</a></section>
+<section><h3>دسترسی سریع</h3><a href="/">صفحه اصلی</a><a href="/درباره-من/">درباره من</a><a href="/پشتیبانی-شبکه-در-شیراز/">خدمات شبکه</a></section>
 <section><h3>موضوعات</h3>{topic_links}</section>
 </div>
 <div class="shell footer-bottom"><p>© {fa_digits(jy)} رامتین رحمانی‌نژاد — همه حقوق محفوظ است.</p><p>ساخته‌شده برای انتقال تجربه</p></div></footer>
@@ -451,6 +451,9 @@ def cat_chips(p):
     return ''.join(out)
 
 AVATAR = '/wp-content/uploads/2021/10/Ramtin-Rahmani-Nejad-Asil.jpg'
+# About hero photo (23 Nov 2026): Ramtin with his cats Jose + Enzo, from
+# ramtin.zone. About-only — the post author boxes keep AVATAR.
+ABOUT_PHOTO = '/wp-content/uploads/2021/10/ramtin-jose-enzo-netadminhub.com_-768x1024.webp'
 AUTHOR_URL = '/author/ramtin-rahmanigmail-com/'
 
 def card_html(p, index=0, grid=False):
@@ -604,7 +607,8 @@ def contact_section_html():
     """Contact section (info only). The form was removed 22 Nov 2026: it
     had no backend, only a mailto hack that opened the visitor's mail
     client — not a working form. Visitors email directly via the mailto
-    link below. Used on the about page and the standalone contact page."""
+    link below. Used on the about page (the standalone /contact/ page was
+    removed 23 Nov 2026 — its content was identical to this section)."""
     return f"""<section class="contact-section shell" id="contact">
 <div class="contact-info"><span class="eyebrow">تماس با من</span><h2>برای همکاری یا مشاوره، پیام بفرستید.</h2>
 <p>اگر فکر می‌کنید می‌تونم در پروژه، زیرساخت یا آموزش به شما کمک کنم، بهم ایمیل بزنید. در اولین فرصت پاسخ می‌دم.</p>
@@ -630,7 +634,7 @@ def page_page(pg):
 <span class="eyebrow">سلام، من رامتین هستم</span>
 <p>از سال ۱۳۸۵ در حوزه فناوری اطلاعات و شبکه فعالیت می‌کنم و تجربه‌م رو از دل پروژه‌های واقعی، ساده و کاربردی به اشتراک میذارم.</p>
 <a class="primary-button" href="#contact">تماس با من {icon('arrow')}</a></div>
-<figure><div class="portrait-frame"><img src="{AVATAR}" alt="رامتین رحمانی‌نژاد"></div></figure>
+<figure><div class="portrait-frame"><img src="{ABOUT_PHOTO}" alt="رامتین رحمانی‌نژاد"></div></figure>
 </div></section>
 <section class="shell bio-section"><div class="bio-title"><span class="eyebrow">مسیر حرفه‌ای من</span><h2>از یادگیری تا<br>انتقال تجربه</h2></div>
 <div class="bio-copy"><p class="lead">سلام. من <strong>رامتین رحمانی‌نژاد اصیل</strong> هستم. از سال ۱۳۸۵ در حوزه آی‌تی فعال هستم.</p>
@@ -644,16 +648,6 @@ def page_page(pg):
 <div><span>۰۲</span><h3>اجرا و پشتیبانی</h3><p>راه‌اندازی و نگهداری شبکه، سرورها، میکروتیک، لینوکس، سرویس‌های مایکروسافت و VOIP.</p></div>
 <div><span>۰۳</span><h3>آموزش تخصصی</h3><p>دوره‌ها و آموزش‌های پروژه‌محور برای مهندسان شبکه، مدیران IT و علاقه‌مندان زیرساخت.</p></div>
 </div></div></section>
-{contact_section_html()}
-</main>"""
-        return page_shell(title, yoast_head_for('page', pg['slug']), body,
-                          body_class=f"rtl page page-id-{pg['id']}")
-    if slug == 'contact':
-        body = f"""<main class="main">
-<section class="page-hero category-hero"><div class="shell">
-<div class="breadcrumbs"><a href="/">خانه</a><span>/</span><span>تماس با من</span></div>
-<h1>تماس با من</h1>
-</div></section>
 {contact_section_html()}
 </main>"""
         return page_shell(title, yoast_head_for('page', pg['slug']), body,
@@ -1278,7 +1272,8 @@ def build_sitemaps():
         body = ''.join(f'<url><loc>{SITE_URL}{u}</loc><lastmod>{lm}</lastmod></url>' for u, lm in urls)
         return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + body + '</urlset>'
     post_urls = [(post_url(p), p['modified'][:10]) for p in posts]
-    page_urls = [('/' + slug_path(pg['slug']) + '/', pg['modified'][:10]) for pg in pages]
+    page_urls = [('/' + slug_path(pg['slug']) + '/', pg['modified'][:10]) for pg in pages
+                 if unquote(pg['slug']) != 'contact']  # /contact/ removed 23 Nov 2026
     cat_urls = [(cat_url(c), max([p['modified'][:10] for p in posts if c['id'] in p.get('categories', [])] or ['2026-07-16']))
                 for c in categories if c['count'] > 0]
     write('post-sitemap.xml', urlset(post_urls))
@@ -1323,7 +1318,29 @@ def main():
     for p in posts:
         write(slug_path(p['slug']) + '/index.html', post_page(p))
     for pg in pages:
+        # /contact/ removed 23 Nov 2026: its content (the contact section)
+        # already lives on About (/درباره-من/#contact). Skip it here so no
+        # standalone page is generated; a redirect stub is written below.
+        if unquote(pg['slug']) == 'contact':
+            continue
         write(slug_path(pg['slug']) + '/index.html', page_page(pg))
+    # Redirect stub for the removed /contact/ page: old links, bookmarks
+    # and Google land here instead of a 404. The contact section lives on
+    # About (/درباره-من/#contact). noindex so the stub itself is not indexed.
+    write('contact/index.html', """<!DOCTYPE html>
+<html dir="rtl" lang="fa-IR">
+<head>
+<meta charset="utf-8">
+<title>تماس با من - رامتین</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://ramtiin.ir/درباره-من/#contact">
+<meta http-equiv="refresh" content="0; url=https://ramtiin.ir/درباره-من/#contact">
+</head>
+<body>
+<p>این صفحه منتقل شد — <a href="https://ramtiin.ir/درباره-من/#contact">تماس با من در صفحه درباره من</a></p>
+</body>
+</html>
+""")
     for c in categories:
         items = [p for p in posts if c['id'] in p.get('categories', [])]
         archive_pages(items, cat_url(c), c['name'], c.get('description') or '', kind='category')
