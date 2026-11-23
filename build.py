@@ -279,6 +279,12 @@ BIO_SHORT = ('از سال 1385 در حوزه آی‌تی و شبکه فعالی�
              'مایکروسافت، لینوکس، سیسکو، میکروتیک، VOIP، ارتباطات رادیویی و مدیریت سرور تخصص دارم. برای مشاوره، اجرای پروژه '
              'و پشتیبانی شبکه با من تماس بگیرین :)')
 
+# Header menu — EXACTLY the WordPress menu (order, parents, children, labels),
+# recovered from the saved WP-rendered HTML (pages_html/). Two dropdown parents:
+# خدمات (3 children) and رامتین (3 children: درباره من، تماس با من، حمایت مالی).
+# One deliberate difference from WP: «تماس با من» points to /درباره-من/#contact
+# instead of /contact/ — /contact/ was removed 23 Nov 2026 by Ramtin's decision
+# and now redirects there.
 NAV = [
     ('صفحه اصلی', '/'),
     ('دوره‌های آموزش میکروتیک', '/آموزش-میکروتیک/'),
@@ -287,12 +293,12 @@ NAV = [
     ('ویندوز', '/category/windows/'),
     ('VOIP', '/category/voip/'),
     ('ترفند', '/category/tricks/'),
-    ('درباره من', '/درباره-من/'),
-    ('تماس با من', '/درباره-من/#contact'),
     ('خدمات', '#', [('پشتیبانی شبکه در شیراز', '/پشتیبانی-شبکه-در-شیراز/'),
                     ('راه‌اندازی شبکه در شیراز', '/راه-اندازی-شبکه-در-شیراز/'),
                     ('پشتیبانی تلفن ویپ', '/پشتیبانی-تلفن-ویپ/')]),
-    ('رامتین', '#', [('حمایت مالی', '/donate/')]),
+    ('رامتین', '#', [('درباره من', '/درباره-من/'),
+                     ('تماس با من', '/درباره-من/#contact'),
+                     ('حمایت مالی', '/donate/')]),
 ]
 
 # Inline SVG icons (Figma's Icon set — the theme's Font Awesome + SVG sprite
@@ -302,6 +308,7 @@ ICON_PATHS = {
     'menu': '<path d="M4 7h16M4 12h16M4 17h16"/>',
     'close': '<path d="m6 6 12 12M18 6 6 18"/>',
     'arrow': '<path d="M19 12H5M11 18l-6-6 6-6"/>',
+    'chevron': '<path d="m6 9 6 6 6-6"/>',
     'clock': '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/>',
     'instagram': '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',
     'linkedin': '<path d="M7 9v9M7 6.5v.01M11 18v-5c0-2 1-3.5 3.2-3.5 2 0 2.8 1.5 2.8 3.5v5M11 10v8"/>',
@@ -325,19 +332,38 @@ def socials_html(muted=False):
 <a href="https://t.me/netadminplus" target="_blank" rel="noreferrer" aria-label="تلگرام">{icon('telegram')}</a>
 </div>'''
 
-# Desktop nav: Figma's flat nav (no dropdowns in the design). The two
-# dropdown parents (خدمات، رامتین) live in the drawer as flat links.
-NAV_DESKTOP = [e for e in NAV if len(e) == 2]
-DRAWER_LINKS = [(label, href) for label, href in NAV_DESKTOP]
-for _label, _href, _subs in [e for e in NAV if len(e) == 3]:
-    DRAWER_LINKS += _subs
-
+# Desktop nav: dropdown parents render as hover/focus/click dropdowns (WP
+# behaviour — the Figma flat nav dropped them, which hid 4 links on desktop).
+# The drawer walks NAV in order, parents as group labels, children indented.
 def desktop_nav_html(current=''):
-    links = ''.join(f'<a href="{href}">{label}</a>' for label, href in NAV_DESKTOP)
-    return f'<nav class="desktop-nav" aria-label="منوی اصلی">{links}</nav>'
+    parts = []
+    for e in NAV:
+        if len(e) == 2:
+            label, href = e
+            parts.append(f'<a href="{href}">{label}</a>')
+        else:
+            label, _href, subs = e
+            subs_html = ''.join(f'<a href="{h}">{l}</a>' for l, h in subs)
+            parts.append(
+                f'<span class="nav-drop"><button type="button" class="nav-parent" aria-haspopup="true" aria-expanded="false">{label}{icon("chevron", 14)}</button>'
+                f'<span class="nav-sub">{subs_html}</span></span>')
+    return f'<nav class="desktop-nav" aria-label="منوی اصلی">{''.join(parts)}</nav>'
+
+def drawer_links_html():
+    parts = []
+    for e in NAV:
+        if len(e) == 2:
+            label, href = e
+            parts.append(f'<a href="{href}" data-close-drawer>{label}</a>')
+        else:
+            label, _href, subs = e
+            parts.append(f'<span class="drawer-group">{label}</span>')
+            for l, h in subs:
+                parts.append(f'<a href="{h}" data-close-drawer class="drawer-sub">{l}</a>')
+    return ''.join(parts)
 
 def header_html(current=''):
-    drawer_links = ''.join(f'<a href="{href}" data-close-drawer>{label}</a>' for label, href in DRAWER_LINKS)
+    drawer_links = drawer_links_html()
     return f"""<div class="topline"><div class="shell topline-inner"><span>راهنمای کاربردی برای دنیای شبکه و دواپس</span>{socials_html(muted=True)}</div></div>
 <header class="site-header"><div class="shell header-inner">
 <a class="brand" href="/" aria-label="رامتین، صفحه اصلی">رامتین<span>.</span></a>
@@ -364,9 +390,21 @@ def header_html(current=''):
 <p>پیشنهاد: میکروتیک، OpenConnect، لینوکس، VPN</p>
 </form></div>"""
 
+# Footer quick links — the WordPress footer menu (exact labels, WP order).
+# (WP's home link there was a literal '#'; '/' is the correct href.)
+FOOTER_QUICK = [
+    ('صفحه اصلی', '/'),
+    ('دوره‌های آموزش میکروتیک', '/آموزش-میکروتیک/'),
+    ('درباره من', '/درباره-من/'),
+    ('تماس با من', '/درباره-من/#contact'),
+    ('حمایت مالی', '/donate/'),
+    ('پشتیبانی شبکه', '/پشتیبانی-شبکه-در-شیراز/'),
+]
+
 def footer_html():
     cats = [CAT_BY_SLUG[s] for s in ('mikrotik', 'linux', 'network', 'tricks') if s in CAT_BY_SLUG]
     topic_links = ''.join(f'<a href="{cat_url(c)}">{c["name"]}</a>' for c in cats)
+    quick_links = ''.join(f'<a href="{h}">{l}</a>' for l, h in FOOTER_QUICK)
     now = datetime.now()
     jy = gregorian_to_jalali(now.year, now.month, now.day)[0]
     return f"""<footer><div class="shell footer-grid">
@@ -375,7 +413,7 @@ def footer_html():
 <p>یادداشت‌ها و آموزش‌های کاربردی درباره شبکه و دواپس.</p>
 {socials_html()}
 </section>
-<section><h3>دسترسی سریع</h3><a href="/">صفحه اصلی</a><a href="/درباره-من/">درباره من</a><a href="/پشتیبانی-شبکه-در-شیراز/">خدمات شبکه</a></section>
+<section><h3>دسترسی سریع</h3>{quick_links}</section>
 <section><h3>موضوعات</h3>{topic_links}</section>
 </div>
 <div class="shell footer-bottom"><p>© {fa_digits(jy)} رامتین رحمانی‌نژاد — همه حقوق محفوظ است.</p><p>ساخته‌شده برای انتقال تجربه</p></div></footer>
@@ -758,6 +796,31 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-close-drawer]').forEach(function (b) {
     b.addEventListener('click', closeDrawer);
   });
+  // desktop dropdowns: click toggles (touch), hover/focus handled by CSS
+  document.querySelectorAll('.nav-drop').forEach(function (d) {
+    var btn = d.querySelector('.nav-parent');
+    if (!btn) return;
+    btn.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      var open = d.classList.contains('is-open');
+      document.querySelectorAll('.nav-drop.is-open').forEach(function (o) {
+        o.classList.remove('is-open');
+        var b = o.querySelector('.nav-parent');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      });
+      if (!open) {
+        d.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+  document.addEventListener('click', function () {
+    document.querySelectorAll('.nav-drop.is-open').forEach(function (o) {
+      o.classList.remove('is-open');
+      var b = o.querySelector('.nav-parent');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+  });
   // search modal (Figma: .search-modal with .open; the form submits to /search/?q=)
   var modal = document.querySelector('.search-modal');
   function openSearch() {
@@ -861,6 +924,14 @@ STATIC_CSS = """/* ============================================================
 .desktop-nav a { position: relative; padding: 28px 0; }
 .desktop-nav a::after { content: ''; position: absolute; right: 0; left: 100%; bottom: 18px; height: 2px; background: var(--accent); transition: .2s; }
 .desktop-nav a:hover::after { left: 0; }
+.desktop-nav .nav-drop { position: relative; }
+.desktop-nav .nav-parent { display: inline-flex; align-items: center; gap: 5px; background: none; border: 0; padding: 28px 0; font: inherit; font-weight: 600; color: inherit; cursor: pointer; }
+.desktop-nav .nav-parent svg { transition: transform .2s; }
+.desktop-nav .nav-drop:hover .nav-parent svg, .desktop-nav .nav-drop:focus-within .nav-parent svg, .desktop-nav .nav-drop.is-open .nav-parent svg { transform: rotate(180deg); }
+.desktop-nav .nav-sub { position: absolute; top: 100%; right: 0; min-width: 230px; display: none; flex-direction: column; background: white; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 45px rgba(25,37,48,.12); padding: 8px; z-index: 70; }
+.desktop-nav .nav-sub a { padding: 10px 14px; font-weight: 500; }
+.desktop-nav .nav-sub a::after { display: none; }
+.desktop-nav .nav-drop:hover .nav-sub, .desktop-nav .nav-drop:focus-within .nav-sub, .desktop-nav .nav-drop.is-open .nav-sub { display: flex; }
 .header-actions { margin-right: auto; display: flex; gap: 8px; }
 .icon-button { border: 0; background: transparent; padding: 0; width: 40px; height: 40px; display: grid; place-items: center; color: var(--ink); }
 .icon-button:hover { color: var(--accent); }
@@ -872,6 +943,8 @@ STATIC_CSS = """/* ============================================================
 .drawer-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 25px; border-bottom: 1px solid var(--line); }
 .drawer-nav { display: flex; flex-direction: column; padding: 25px 0; }
 .drawer-nav a { padding: 12px 0; border-bottom: 1px solid #eef0f2; font-weight: 600; }
+.drawer-nav .drawer-group { display: block; font-size: 13px; font-weight: 700; color: var(--muted); padding: 18px 0 4px; }
+.drawer-nav .drawer-sub { padding-right: 18px; font-size: 14px; font-weight: 500; }
 .drawer-foot { margin-top: auto; color: var(--muted); font-size: 14px; }
 .drawer-foot .socials { margin-top: 16px; }
 .drawer-foot .socials a { color: var(--ink); border-color: var(--line); }
